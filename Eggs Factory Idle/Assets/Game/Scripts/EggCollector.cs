@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class EggCollector : MonoBehaviour, ICollector
 {
+    public ConveyorFloor conveyorFloor;
+
+
     public void ProcessCollectible(ICollectable collectible)
     {
         if (collectible == null)
@@ -18,6 +21,10 @@ public class EggCollector : MonoBehaviour, ICollector
         ICollectable collectible = other.GetComponent<ICollectable>();
         if (collectible != null)
         {
+            if (conveyorFloor != null && !conveyorFloor.IsLastConveyor && other.gameObject.layer == LayerMask.NameToLayer("EggHalf"))
+            {
+                return;                
+            }
             ProcessCollectible(collectible);
         }
     }

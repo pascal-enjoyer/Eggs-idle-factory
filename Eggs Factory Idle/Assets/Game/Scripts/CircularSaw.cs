@@ -15,6 +15,7 @@ public class CircularSaw : MonoBehaviour
     private bool isMoving;
     private float moveTimer;
     private Transform targetPosition;
+    
 
     private void Start()
     {
@@ -49,10 +50,10 @@ public class CircularSaw : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isActive)
+        if (isActive && other.gameObject.layer == LayerMask.NameToLayer("Egg"))
         {
             Egg egg = other.GetComponent<Egg>();
-            if (egg != null && egg.CanBeSplit())
+            if (egg != null && egg.CanBeSplitOnFloor())
             {
                 egg.Split();
             }

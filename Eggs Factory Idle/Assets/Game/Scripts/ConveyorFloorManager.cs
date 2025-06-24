@@ -7,7 +7,7 @@ public class ConveyorFloorManager : MonoBehaviour
     [SerializeField] private GameObject floorPrefab;
     [SerializeField] private float verticalSpacing = 2f; // Расстояние между этажами
     [SerializeField] private Transform initialPosition;
-
+    [SerializeField] private int maxFloorsCount = 3;
     private void Awake()
     {
         if (floors.Count == 0)
@@ -22,6 +22,10 @@ public class ConveyorFloorManager : MonoBehaviour
         if (floorPrefab == null)
         {
             Debug.LogError("ConveyorFloorManager: floorPrefab not assigned!");
+            return;
+        }
+        if (floors.Count >= maxFloorsCount)
+        {
             return;
         }
 
@@ -54,6 +58,7 @@ public class ConveyorFloorManager : MonoBehaviour
         {
             bool isLast = i == floors.Count - 1;
             floors[i].SetLastFloor(isLast);
+            floors[i].SetFloorIndex(i);
             Debug.Log($"ConveyorFloorManager: Floor {i} at position={floors[i].transform.position}, set to isLastFloor={isLast}");
         }
     }

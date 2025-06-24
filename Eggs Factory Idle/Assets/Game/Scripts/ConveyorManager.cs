@@ -5,8 +5,6 @@ public class ConveyorManager : MonoBehaviour
     [SerializeField] private GameObject normalConveyor;
     [SerializeField] private GameObject shortenedConveyor;
     [SerializeField] private bool isLastConveyor = true;
-    public bool isMirrored = false; // для отладки
-    private IConveyor activeConveyor;
 
     private void Awake()
     {
@@ -27,7 +25,11 @@ public class ConveyorManager : MonoBehaviour
         {
             normalConveyor.SetActive(isLast);
             shortenedConveyor.SetActive(!isLast);
-            activeConveyor = isLast ? normalConveyor.GetComponent<IConveyor>() : shortenedConveyor.GetComponent<IConveyor>();
+            if (isLast)
+            {
+                normalConveyor.SetActive(isLast);
+                shortenedConveyor.SetActive(!isLast);
+            }
             Debug.Log($"ConveyorManager {gameObject.name} set to {(isLast ? "normal" : "shortened")} conveyor, normalActive={normalConveyor.activeSelf}, shortenedActive={shortenedConveyor.activeSelf}");
         }
 
@@ -35,10 +37,10 @@ public class ConveyorManager : MonoBehaviour
 
     public void MirrorDirection()
     {
-        if (activeConveyor != null)
+        if (normalConveyor != null && shortenedConveyor != null)
         {
-            isMirrored = true;
-            activeConveyor.MirrorDirection();
+            normalConveyor.GetComponent<IConveyor>().MirrorDirection();
+            shortenedConveyor.GetComponent<IConveyor>().MirrorDirection();
         }
     }
 
