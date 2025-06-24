@@ -12,7 +12,7 @@ public class Conveyor : MonoBehaviour, IConveyor
     {
         boxCollider = GetComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
-        gameObject.layer = LayerMask.NameToLayer("Conveyor");
+        //gameObject.layer = LayerMask.NameToLayer("Conveyor");
         //Debug.Log($"Conveyor {gameObject.name} initialized, colliderBounds={boxCollider.bounds}");
     }
 

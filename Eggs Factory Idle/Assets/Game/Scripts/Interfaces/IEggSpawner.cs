@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IEggSpawner
 {
-    void SpawnEgg();
+    void SpawnEgg(EggData eggData);
 }

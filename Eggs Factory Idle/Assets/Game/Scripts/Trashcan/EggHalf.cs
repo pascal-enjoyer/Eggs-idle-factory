@@ -24,7 +24,7 @@ public class EggHalf : MonoBehaviour, ICollectable, IMoveable, IInitializableEgg
 
     public int GetCoinReward()
     {
-        return eggData.Income;
+        return eggData.CurrentIncome;
     }
 
     public void Move(Vector2 direction, float speed)

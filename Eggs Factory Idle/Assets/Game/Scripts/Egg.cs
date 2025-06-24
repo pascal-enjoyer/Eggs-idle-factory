@@ -35,7 +35,7 @@ public class Egg : MonoBehaviour, IInitializableEgg, IMoveable, ICollectable
 
     public int GetCoinReward()
     {
-        return eggData.Income;
+        return eggData.CurrentIncome;
     }
 
     public void OnNewFloorEnter(int floorIndex)
@@ -83,33 +83,6 @@ public class Egg : MonoBehaviour, IInitializableEgg, IMoveable, ICollectable
         halfScript.Initialize(eggData);
         halfScript.SetFloorState(currentFloorIndex, true); // ѕоловинки не распиливаютс€ на этом этаже
     }
-
-/*    private void CreateHalf(Vector2 offset, Quaternion rotation)
-    {
-        GameObject half = new GameObject($"{eggData.EggName}_Half");
-        half.transform.position = transform.position + (Vector3)offset;
-        half.transform.rotation = rotation;
-
-        SpriteRenderer halfRenderer = half.AddComponent<SpriteRenderer>();
-        halfRenderer.sprite = eggData.EggSprite;
-        halfRenderer.sortingOrder = spriteRenderer.sortingOrder;
-        halfRenderer.sortingLayerName = spriteRenderer.sortingLayerName;
-        half.transform.localScale = new Vector3(0.5f, 0.5f, 1f);
-
-        Rigidbody2D halfRb = half.AddComponent<Rigidbody2D>();
-        halfRb.gravityScale = rb2D.gravityScale;
-        halfRb.constraints = rb2D.constraints;
-
-        CircleCollider2D halfCollider = half.AddComponent<CircleCollider2D>();
-        halfCollider.radius = 0.25f;
-
-
-        Egg halfScript = half.AddComponent<Egg>();
-
-        half.layer = LayerMask.NameToLayer("EggHalf");
-        halfScript.Initialize(eggData);
-        halfScript.SetFloorState(currentFloorIndex, true); // ѕоловинки не распиливаютс€ на этом этаже
-    }*/
 
     public void SetFloorState(int floorIndex, bool wasSplitted)
     {

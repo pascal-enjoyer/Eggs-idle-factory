@@ -49,7 +49,7 @@ public class ConveyorFloorManager : MonoBehaviour
         }
 
         UpdateFloorStates();
-        Debug.Log($"ConveyorFloorManager: Added floor at position={spawnPosition}, total floors={floors.Count}, mirrored={floors.Count % 2 == 0}");
+        //Debug.Log($"ConveyorFloorManager: Added floor at position={spawnPosition}, total floors={floors.Count}, mirrored={floors.Count % 2 == 0}");
     }
 
     private void UpdateFloorStates()
@@ -59,7 +59,7 @@ public class ConveyorFloorManager : MonoBehaviour
             bool isLast = i == floors.Count - 1;
             floors[i].SetLastFloor(isLast);
             floors[i].SetFloorIndex(i);
-            Debug.Log($"ConveyorFloorManager: Floor {i} at position={floors[i].transform.position}, set to isLastFloor={isLast}");
+            //Debug.Log($"ConveyorFloorManager: Floor {i} at position={floors[i].transform.position}, set to isLastFloor={isLast}");
         }
     }
 }

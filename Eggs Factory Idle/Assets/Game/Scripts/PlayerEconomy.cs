@@ -35,9 +35,21 @@ public class PlayerEconomy : MonoBehaviour
 
     public void AddCoins(int amount)
     {
-        coins += amount;
-        SaveCoins();
-        CoinsChanged?.Invoke();
+        bool adding = true;
+        if (amount < 0 && HaveEnoughCoinsToBuy(amount))
+            adding = true;
+        else adding = false;
+        if (adding)
+        {
+            coins += amount;
+            SaveCoins();
+            CoinsChanged?.Invoke();
+        }
+    }
+
+    public bool HaveEnoughCoinsToBuy(int amount)
+    {
+        return coins - Math.Abs(amount) >= 0;
     }
 
     public int GetCoins()

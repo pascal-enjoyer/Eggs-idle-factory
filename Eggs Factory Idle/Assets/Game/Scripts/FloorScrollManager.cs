@@ -72,7 +72,7 @@ public class FloorScrollManager : MonoBehaviour
         cameraPos.y = Mathf.Clamp(cameraPos.y, minCameraY, maxCameraY);
         mainCamera.transform.position = cameraPos;
 
-        Debug.Log($"Bounds: Floors = {floorCount}, Total Height = {totalHeight}, Screen Height = {screenHeight}, Can Scroll = {canScroll}, Min Y = {minCameraY}, Max Y = {maxCameraY}, Camera Y = {cameraPos.y}");
+        //Debug.Log($"Bounds: Floors = {floorCount}, Total Height = {totalHeight}, Screen Height = {screenHeight}, Can Scroll = {canScroll}, Min Y = {minCameraY}, Max Y = {maxCameraY}, Camera Y = {cameraPos.y}");
     }
 
     void HandleInput()

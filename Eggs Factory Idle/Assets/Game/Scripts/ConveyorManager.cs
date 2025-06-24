@@ -30,7 +30,7 @@ public class ConveyorManager : MonoBehaviour
                 normalConveyor.SetActive(isLast);
                 shortenedConveyor.SetActive(!isLast);
             }
-            Debug.Log($"ConveyorManager {gameObject.name} set to {(isLast ? "normal" : "shortened")} conveyor, normalActive={normalConveyor.activeSelf}, shortenedActive={shortenedConveyor.activeSelf}");
+            //Debug.Log($"ConveyorManager {gameObject.name} set to {(isLast ? "normal" : "shortened")} conveyor, normalActive={normalConveyor.activeSelf}, shortenedActive={shortenedConveyor.activeSelf}");
         }
 
     }
