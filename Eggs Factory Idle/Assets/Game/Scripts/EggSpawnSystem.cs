@@ -17,9 +17,7 @@ public class EggSpawnSystem : MonoBehaviour
             Destroy(this);
             return;
         }
-
         Instance = this;
-
         if (_spawner == null)
             _spawner = GetComponent<EggSpawner>();
     }
@@ -28,7 +26,10 @@ public class EggSpawnSystem : MonoBehaviour
     {
         foreach (var timer in _eggTimers.Values)
         {
-            timer.UpdateTimer(Time.deltaTime);
+            // ѕровер€ем шанс удвоени€ скорости спавна
+            float doubleSpeedChance = GameModifiers.Instance.GetDoubleFruitSpeedChance();
+            float speedMultiplier = UnityEngine.Random.value < doubleSpeedChance ? 2f : 1f;
+            timer.UpdateTimer(Time.deltaTime * speedMultiplier);
         }
     }
 

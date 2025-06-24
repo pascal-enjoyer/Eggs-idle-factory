@@ -1,49 +1,55 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UpgradeButton : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI upgradeNameText;
-    [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI costText;
-    [SerializeField] private Button upgradeButton;
-    private UpgradeType upgradeType;
+    [SerializeField] private Image iconImage; // Иконка апгрейда
+    [SerializeField] private Text levelText; // Текст уровня
+    [SerializeField] private Text costText; // Текст стоимости
+    [SerializeField] private Button button; // Кнопка апгрейда
 
-    public void Initialize(UpgradeType type)
+    private UpgradeType upgradeType;
+    private Action<UpgradeType> onSelectCallback;
+
+    public void Initialize(UpgradeType type, Action<UpgradeType> onSelect)
     {
         upgradeType = type;
+        onSelectCallback = onSelect;
+        var config = UpgradeSystem.Instance.GetUpgradeConfig(type);
+        iconImage.sprite = config.Icon;
+        button.onClick.AddListener(OnButtonClick);
         UpdateUI();
-        upgradeButton.onClick.AddListener(OnUpgradeButtonClick);
+        UpgradeSystem.Instance.AddListener(UpdateUI);
     }
-
 
     private void OnEnable()
     {
-        //UpgradeSystem.Instance.AddListener(UpdateUI);
+        UpgradeSystem.Instance.AddListener(UpdateUI);
     }
 
     private void OnDisable()
     {
-        //UpgradeSystem.Instance.RemoveListener(UpdateUI);
+        UpgradeSystem.Instance.RemoveListener(UpdateUI);
     }
 
-    private void OnUpgradeButtonClick()
+    private void OnDestroy()
     {
-        if (UpgradeSystem.Instance.CanPurchaseUpgrade(upgradeType))
-        {
-            UpgradeSystem.Instance.PurchaseUpgrade(upgradeType);
-            UpdateUI();
-        }
+        button.onClick.RemoveListener(OnButtonClick);
+    }
+
+    private void OnButtonClick()
+    {
+        onSelectCallback?.Invoke(upgradeType);
     }
 
     private void UpdateUI()
     {
         var level = UpgradeSystem.Instance.GetUpgradeLevel(upgradeType);
-        //var config = UpgradeSystem.Instance.GetUpgradeConfig(upgradeType);
-        upgradeNameText.text = upgradeType.ToString();
-        //levelText.text = $"Level: {level}/{config.MaxLevel}";
-        //costText.text = $"Cost: {config.CostPerLevel} points";
-        upgradeButton.interactable = UpgradeSystem.Instance.CanPurchaseUpgrade(upgradeType);
+        var config = UpgradeSystem.Instance.GetUpgradeConfig(upgradeType);
+        levelText.text = $"Lv. {level}/{config.MaxLevel}";
+        costText.text = level < config.MaxLevel ? $"{config.CostPerLevel}" : "Макс";
+        button.interactable = UpgradeSystem.Instance.CanPurchaseUpgrade(upgradeType);
     }
 }

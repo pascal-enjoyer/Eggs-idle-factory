@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80cd8062ea7842a4e9daf45dfb6c7026, type: 3}
+  m_Name: UpgradeConfig
+  m_EditorClassIdentifier: 
+  Upgrades:
+  - Type: 0
+    MaxLevel: 5
+    CostPerLevel: 2
+    Icon: {fileID: 21300000, guid: 368c3ee00ce8303448ed9753c07cdeb2, type: 3}
+  - Type: 1
+    MaxLevel: 10
+    CostPerLevel: 1
+    Icon: {fileID: 21300000, guid: 747c538deb9fe934cbfc9dd635f971b0, type: 3}
+  - Type: 2
+    MaxLevel: 10
+    CostPerLevel: 1
+    Icon: {fileID: 21300000, guid: ee68de1b40bd60747a5c5bd25d27c9fa, type: 3}
+  - Type: 3
+    MaxLevel: 10
+    CostPerLevel: 2
+    Icon: {fileID: 21300000, guid: 855455015c5cf354e9fa1e63473e80c5, type: 3}
+  - Type: 4
+    MaxLevel: 10
+    CostPerLevel: 2
+    Icon: {fileID: 21300000, guid: 3f503e3c0382fe44aa24d335d315a3ef, type: 3}
+  - Type: 5
+    MaxLevel: 10
+    CostPerLevel: 1
+    Icon: {fileID: 21300000, guid: 49f2fe108570f6440869380891773030, type: 3}
+  - Type: 6
+    MaxLevel: 10
+    CostPerLevel: 2
+    Icon: {fileID: 21300000, guid: 0380fd8a232309547ab14f3d146c8aa5, type: 3}
+  - Type: 7
+    MaxLevel: 10
+    CostPerLevel: 2
+    Icon: {fileID: 21300000, guid: bb8d2bc12646d24439ef585e5888bd40, type: 3}
+  - Type: 8
+    MaxLevel: 10
+    CostPerLevel: 2
+    Icon: {fileID: 21300000, guid: 3958c5f092b94b74d9835af69bd31375, type: 3}

@@ -4,28 +4,37 @@ using System.Collections.Generic;
 public class ConveyorFloorManager : MonoBehaviour
 {
     [SerializeField] private List<ConveyorFloor> floors = new List<ConveyorFloor>();
-    [SerializeField] private GameObject floorPrefab;
+    [SerializeField] private GameObject floorPrefab; // Префаб этажа
     [SerializeField] private float verticalSpacing = 2f; // Расстояние между этажами
-    [SerializeField] private Transform initialPosition;
-    [SerializeField] private int maxFloorsCount = 3;
+    [SerializeField] private Transform initialPosition; // Начальная позиция первого этажа
+    [SerializeField] private int maxFloorsCount = 5; // Максимальное число этажей (ограничиваем апгрейдом)
+
     private void Awake()
     {
         if (floors.Count == 0)
         {
             AddFloor();
         }
-        UpdateFloorStates();
+        UpdateConveyorCount();
+        // Подписываемся на изменение апгрейдов
+        UpgradeSystem.Instance.OnUpgradeChanged += UpdateConveyorCount;
+    }
+
+    private void OnDestroy()
+    {
+        UpgradeSystem.Instance.OnUpgradeChanged -= UpdateConveyorCount;
     }
 
     public void AddFloor()
     {
         if (floorPrefab == null)
         {
-            Debug.LogError("ConveyorFloorManager: floorPrefab not assigned!");
+            Debug.LogError("ConveyorFloorManager: floorPrefab не назначен!");
             return;
         }
         if (floors.Count >= maxFloorsCount)
         {
+            Debug.LogWarning("ConveyorFloorManager: Достигнуто максимальное число этажей!");
             return;
         }
 
@@ -35,7 +44,7 @@ public class ConveyorFloorManager : MonoBehaviour
         ConveyorFloor newConveyorFloor = newFloor.GetComponent<ConveyorFloor>();
         if (newConveyorFloor == null)
         {
-            Debug.LogError("ConveyorFloorManager: floorPrefab missing ConveyorFloor component!");
+            Debug.LogError("ConveyorFloorManager: floorPrefab не содержит компонент ConveyorFloor!");
             Destroy(newFloor);
             return;
         }
@@ -49,7 +58,6 @@ public class ConveyorFloorManager : MonoBehaviour
         }
 
         UpdateFloorStates();
-        //Debug.Log($"ConveyorFloorManager: Added floor at position={spawnPosition}, total floors={floors.Count}, mirrored={floors.Count % 2 == 0}");
     }
 
     private void UpdateFloorStates()
@@ -59,7 +67,15 @@ public class ConveyorFloorManager : MonoBehaviour
             bool isLast = i == floors.Count - 1;
             floors[i].SetLastFloor(isLast);
             floors[i].SetFloorIndex(i);
-            //Debug.Log($"ConveyorFloorManager: Floor {i} at position={floors[i].transform.position}, set to isLastFloor={isLast}");
+        }
+    }
+
+    public void UpdateConveyorCount()
+    {
+        int targetCount = GameModifiers.Instance.GetConveyorCount();
+        while (floors.Count < targetCount)
+        {
+            AddFloor();
         }
     }
 }

@@ -13,6 +13,7 @@ public class PlayerEconomy : MonoBehaviour
 
     public event Action CoinsChanged;
     public event Action ExperienceChanged;
+    public event Action LevelChanged;
 
     private void Awake()
     {
@@ -38,17 +39,26 @@ public class PlayerEconomy : MonoBehaviour
         bool adding = true;
         if (amount < 0 && HaveEnoughCoinsToBuy(amount))
             adding = true;
-        else adding = false;
+        else if (amount < 0)
+            adding = false;
         if (adding)
         {
+            float doubleChance = GameModifiers.Instance.GetDoubleIncomeChance();
+            if (UnityEngine.Random.value < doubleChance)
+                amount *= 2;
+            amount = Mathf.RoundToInt(amount * GameModifiers.Instance.GetEggIncomeMultiplier());
             coins += amount;
             SaveCoins();
             CoinsChanged?.Invoke();
         }
     }
 
+
+
     public bool HaveEnoughCoinsToBuy(int amount)
     {
+        float reduction = GameModifiers.Instance.GetEggCostReduction();
+        amount = Mathf.RoundToInt(amount * reduction);
         return coins - Math.Abs(amount) >= 0;
     }
 
@@ -59,11 +69,18 @@ public class PlayerEconomy : MonoBehaviour
 
     public void AddExperience(int amount)
     {
+        float doubleChance = GameModifiers.Instance.GetDoubleExperienceChance();
+        if (UnityEngine.Random.value < doubleChance)
+            amount *= 2;
+        amount = Mathf.RoundToInt(amount * GameModifiers.Instance.GetEggExperienceMultiplier());
         experience += amount;
+        int previousLevel = level;
         while (experience >= GetExperienceForNextLevel(level))
         {
             experience -= GetExperienceForNextLevel(level);
             level++;
+            UpgradeSystem.Instance.AddUpgradePoints(5); // Placeholder: 5 points per level
+            LevelChanged?.Invoke();
         }
         SaveExperienceAndLevel();
         ExperienceChanged?.Invoke();

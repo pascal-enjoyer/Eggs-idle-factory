@@ -40,7 +40,6 @@ public class EggButton : MonoBehaviour
         _eggIcon.sprite = _eggData.EggSprite;
         UpdateUI();
 
-        // Инициализируем progress bar
         if (_eggIcon != null)
         {
             _eggIcon.fillAmount = 0f;
@@ -73,12 +72,15 @@ public class EggButton : MonoBehaviour
         }
     }
 
-
     private void OnButtonClick()
     {
         if (CanUpgrade())
         {
-            PlayerEconomy.Instance.AddCoins(-_eggData.CurrentUpgradeCost);
+            //float doublePurchaseChance = GameModifiers.Instance.GetDoubleEggPurchaseChance();
+            int cost = _eggData.CurrentUpgradeCost;
+/*            if (UnityEngine.Random.value < doublePurchaseChance)
+                cost = 0; // Free purchase*/
+            PlayerEconomy.Instance.AddCoins(-cost);
             _eggData.UpgradeLevel++;
 
             if (_eggData.UpgradeLevel == 1)
@@ -86,14 +88,13 @@ public class EggButton : MonoBehaviour
                 EggSpawnSystem.Instance.AddEgg(_eggData);
                 UnlockNextEgg?.Invoke(_eggData);
             }
-
+            Debug.Log(PlayerEconomy.Instance.GetCoins());
             UpdateUI();
         }
     }
 
     public void UpdateUI()
     {
-        // Для неразблокированных или некупленных
         if (!_eggData.IsUnlocked || _eggData.UpgradeLevel == 0)
         {
             _incomeText.text = "0";
@@ -105,14 +106,12 @@ public class EggButton : MonoBehaviour
             _upgradeCostText.text = _eggData.CurrentUpgradeCost.ToString();
         }
 
-        // Обновляем состояние кнопки
         _button.interactable = CanUpgrade();
     }
 
     private bool CanUpgrade()
     {
         if (!_eggData.IsUnlocked) return false;
-        return 
-               PlayerEconomy.Instance.HaveEnoughCoinsToBuy(_eggData.CurrentUpgradeCost);
+        return PlayerEconomy.Instance.HaveEnoughCoinsToBuy(_eggData.CurrentUpgradeCost);
     }
 }

@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   EggSprite: {fileID: 21300000, guid: dd81ddc1012c10440b70cf0fd1f0123f, type: 3}
   EggName: Red Egg
-  BaseIncome: 1
   BaseSpawnInterval: 2
   BaseUpgradeCost: 10
+  BaseIncome: 1

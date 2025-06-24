@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class UpgradeSystem : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class UpgradeSystem : MonoBehaviour
     [SerializeField] private UpgradeConfigSO upgradeConfig;
     private Dictionary<UpgradeType, UpgradeData> upgradeData = new Dictionary<UpgradeType, UpgradeData>();
     private int upgradePoints;
+
+    public event Action OnUpgradeChanged; // Событие для обновления UI
 
     private void Awake()
     {
@@ -68,23 +71,33 @@ public class UpgradeSystem : MonoBehaviour
         SaveUpgradePoints();
         SaveUpgradeLevel(type);
         ApplyUpgradeEffects(type);
+        OnUpgradeChanged?.Invoke();
     }
 
     public void AddUpgradePoints(int points)
     {
         upgradePoints += points;
         SaveUpgradePoints();
+        OnUpgradeChanged?.Invoke();
     }
 
     public int GetUpgradePoints() => upgradePoints;
 
     public int GetUpgradeLevel(UpgradeType type) => upgradeData.ContainsKey(type) ? upgradeData[type].CurrentLevel : 0;
 
+    public UpgradeConfigSO.UpgradeInfo GetUpgradeConfig(UpgradeType type)
+    {
+        return upgradeConfig.Upgrades.Find(u => u.Type == type);
+    }
+
     private void ApplyUpgradeEffects(UpgradeType type)
     {
-        // Effects are applied through GameModifiers
         GameModifiers.Instance.UpdateModifiers();
     }
+
+    public void AddListener(Action listener) => OnUpgradeChanged += listener;
+
+    public void RemoveListener(Action listener) => OnUpgradeChanged -= listener;
 }
 
 public enum UpgradeType
