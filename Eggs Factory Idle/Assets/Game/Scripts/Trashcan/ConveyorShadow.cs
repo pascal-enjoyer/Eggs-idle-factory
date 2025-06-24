@@ -3,8 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public class ConveyorShadow : MonoBehaviour, IConveyor
 {
-    private float conveyorSpeed;
-    private Vector2 moveDirection;
+    private float conveyorSpeed = 10f;
+    private Vector2 moveDirection = Vector2.right;
 
     private void Awake()
     {
@@ -33,15 +33,7 @@ public class ConveyorShadow : MonoBehaviour, IConveyor
         moveDirection = new Vector2(-moveDirection.x, moveDirection.y);
     }
 
-    public void SetLastConveyor(bool isLast)
-    {
-        gameObject.SetActive(!isLast);
-    }
 
-    public Transform GetShortenPoint()
-    {
-        return null;
-    }
 
     private void OnCollisionStay2D(Collision2D collision)
     {

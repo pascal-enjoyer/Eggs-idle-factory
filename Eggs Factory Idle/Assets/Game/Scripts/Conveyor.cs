@@ -30,16 +30,6 @@ public class Conveyor : MonoBehaviour, IConveyor
         moveDirection = new Vector2(-moveDirection.x, moveDirection.y);
     }
 
-    public void SetLastConveyor(bool isLast)
-    {
-        // Управление активацией через ConveyorManager
-    }
-
-    public Transform GetShortenPoint()
-    {
-        return null;
-    }
-
     private void OnCollisionStay2D(Collision2D collision)
     {
         Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
@@ -50,14 +40,4 @@ public class Conveyor : MonoBehaviour, IConveyor
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        if (boxCollider != null)
-        {
-            Gizmos.color = gameObject.name.Contains("Shortened") ? Color.red : Color.green;
-            Vector3 center = transform.TransformPoint(boxCollider.offset);
-            Vector3 size = new Vector3(boxCollider.size.x, boxCollider.size.y, 1f);
-            Gizmos.DrawWireCube(center, size);
-        }
-    }
 }

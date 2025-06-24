@@ -12,7 +12,7 @@ public class ConveyorFloorManager : MonoBehaviour
     {
         if (floors.Count == 0)
         {
-            Debug.LogWarning("ConveyorFloorManager: No floors assigned in inspector!");
+            AddFloor();
         }
         UpdateFloorStates();
     }

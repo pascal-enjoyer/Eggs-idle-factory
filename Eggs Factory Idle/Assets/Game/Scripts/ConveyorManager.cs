@@ -4,9 +4,8 @@ public class ConveyorManager : MonoBehaviour
 {
     [SerializeField] private GameObject normalConveyor;
     [SerializeField] private GameObject shortenedConveyor;
-    [SerializeField] private ConveyorShadow shadow;
     [SerializeField] private bool isLastConveyor = true;
-
+    public bool isMirrored = false; // для отладки
     private IConveyor activeConveyor;
 
     private void Awake()
@@ -32,22 +31,15 @@ public class ConveyorManager : MonoBehaviour
             Debug.Log($"ConveyorManager {gameObject.name} set to {(isLast ? "normal" : "shortened")} conveyor, normalActive={normalConveyor.activeSelf}, shortenedActive={shortenedConveyor.activeSelf}");
         }
 
-        if (shadow != null)
-        {
-            shadow.SetLastConveyor(isLastConveyor);
-        }
     }
 
     public void MirrorDirection()
     {
         if (activeConveyor != null)
         {
+            isMirrored = true;
             activeConveyor.MirrorDirection();
         }
     }
 
-    public Transform GetShortenPoint()
-    {
-        return null;
-    }
 }
