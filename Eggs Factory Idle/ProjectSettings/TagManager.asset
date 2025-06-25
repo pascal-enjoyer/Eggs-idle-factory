@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Missile
   layers:
   - Default
   - TransparentFX
@@ -46,6 +47,9 @@ TagManager:
     locked: 0
   - name: GameMapObjects
     uniqueID: 3644808203
+    locked: 0
+  - name: VFX
+    uniqueID: 1690857227
     locked: 0
   - name: UI
     uniqueID: 2776627337

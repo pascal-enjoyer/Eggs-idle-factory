@@ -22,7 +22,7 @@ public class EggHalf : MonoBehaviour, ICollectable, IMoveable, IInitializableEgg
         Destroy(gameObject);
     }
 
-    public int GetCoinReward()
+    public float GetCoinReward()
     {
         return eggData.CurrentIncome;
     }

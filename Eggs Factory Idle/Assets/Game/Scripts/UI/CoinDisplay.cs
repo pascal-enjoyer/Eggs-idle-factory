@@ -1,6 +1,4 @@
-// CoinDisplay.cs
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Text))]
@@ -47,7 +45,7 @@ public class CoinDisplay : MonoBehaviour
     {
         if (PlayerEconomy.Instance != null)
         {
-            coinsText.text = PlayerEconomy.Instance.GetCoins().ToString();
+            coinsText.text = PlayerEconomy.Instance.GetCoins().ToString(); // Округляем до int
         }
     }
 }

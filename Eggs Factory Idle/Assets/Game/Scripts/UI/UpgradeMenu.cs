@@ -37,7 +37,7 @@ public class UpgradeMenu : MonoBehaviour
         }
 
         buttonsManager.OnUpgradeSelected += OnUpgradeSelected;
-        UpgradeSystem.Instance.OnUpgradeChanged += UpdateUI;
+        UpgradeSystem.OnUpgradeChanged += UpdateUI;
         PlayerEconomy.Instance.LevelChanged += UpdatePlayerInfo;
         PlayerEconomy.Instance.CoinsChanged += UpdatePlayerInfo; // На случай, если очки зависят от монет
         buyButton.onClick.AddListener(OnBuyButtonClick);
@@ -52,7 +52,7 @@ public class UpgradeMenu : MonoBehaviour
         if (buttonsManager != null)
             buttonsManager.OnUpgradeSelected -= OnUpgradeSelected;
         if (UpgradeSystem.Instance != null)
-            UpgradeSystem.Instance.OnUpgradeChanged -= UpdateUI;
+            UpgradeSystem.OnUpgradeChanged -= UpdateUI;
         if (PlayerEconomy.Instance != null)
         {
             PlayerEconomy.Instance.LevelChanged -= UpdatePlayerInfo;
@@ -72,7 +72,7 @@ public class UpgradeMenu : MonoBehaviour
     {
         if (upgradeInfo == null || !isUpgradeSelected)
         {
-            descriptionText.text = "Выберите апгрейд";
+            descriptionText.text = "Choose upgrade";
             levelText.text = "";
             effectText.text = "";
             buyCostText.text = "";
@@ -82,9 +82,9 @@ public class UpgradeMenu : MonoBehaviour
 
         int currentLevel = UpgradeSystem.Instance.GetUpgradeLevel(upgradeInfo.Type);
         descriptionText.text = upgradeInfo.Description;
-        levelText.text = $"Уровень: {currentLevel}/{upgradeInfo.MaxLevel}";
-        effectText.text = $"Эффект: {GetEffectText(upgradeInfo.Type, currentLevel)}";
-        buyCostText.text = currentLevel < upgradeInfo.MaxLevel ? $"Купить: {upgradeInfo.CostPerLevel} очков" : "Макс. уровень";
+        levelText.text = $"Level {currentLevel}/{upgradeInfo.MaxLevel}";
+        effectText.text = $"{GetEffectText(upgradeInfo.Type, currentLevel)}";
+        buyCostText.text = currentLevel < upgradeInfo.MaxLevel ? $"Buy {upgradeInfo.CostPerLevel}" : "Max";
         buyButton.interactable = UpgradeSystem.Instance.CanPurchaseUpgrade(upgradeInfo.Type);
     }
 
@@ -93,25 +93,25 @@ public class UpgradeMenu : MonoBehaviour
         switch (type)
         {
             case UpgradeType.ConveyorCount:
-                return $"+{level} этажей";
+                return $"+{level} floors";
             case UpgradeType.EggIncome:
-                return $"+{level * 10}% дохода";
+                return $"+{level * 10}% income";
             case UpgradeType.EggExperience:
-                return $"+{level * 10}% опыта";
+                return $"+{level * 10}% exp";
             case UpgradeType.DoubleIncomeChance:
-                return $"+{level * 3}% шанса";
+                return $"+{level * 3}% chance";
             case UpgradeType.DoubleExperienceChance:
-                return $"+{level * 3}% шанса";
+                return $"+{level * 3}% chance";
             case UpgradeType.EggCostReduction:
-                return $"-{level * 5}% стоимости";
+                return $"-{level * 5}% cost";
             case UpgradeType.DoubleEggSpawnChance:
-                return $"+{level * 3}% шанса";
+                return $"+{level * 3}% chance";
             case UpgradeType.DoubleEggPurchaseChance:
-                return $"+{level * 3}% шанса";
+                return $"+{level * 3}% chance";
             case UpgradeType.DoubleFruitSpeedChance:
-                return $"+{level * 3}% шанса";
+                return $"+{level * 3}% chance";
             default:
-                return "Неизвестный эффект";
+                return "Unknown effect";
         }
     }
 
@@ -135,7 +135,7 @@ public class UpgradeMenu : MonoBehaviour
 
     private void UpdatePlayerInfo()
     {
-        playerLevelText.text = $"Уровень: {PlayerEconomy.Instance.GetLevel()}";
-        upgradePointsText.text = $"Очки: {UpgradeSystem.Instance.GetUpgradePoints()}";
+        playerLevelText.text = $"Level {PlayerEconomy.Instance.GetLevel()}";
+        upgradePointsText.text = $"Points {UpgradeSystem.Instance.GetUpgradePoints()}";
     }
 }

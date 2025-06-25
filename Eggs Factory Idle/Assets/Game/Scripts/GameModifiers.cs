@@ -5,7 +5,6 @@ public class GameModifiers : MonoBehaviour
     public static GameModifiers Instance { get; private set; }
 
     [SerializeField] private UpgradeConfigSO upgradeConfig;
-    private int baseConveyorCount = 1; // Default conveyor count
 
     private void Awake()
     {
@@ -20,51 +19,59 @@ public class GameModifiers : MonoBehaviour
 
     public void UpdateModifiers()
     {
-        // Notify systems that need to react to upgrades
+        // Метод для обновления модификаторов при изменении апгрейдов
     }
 
     public int GetConveyorCount()
     {
-        return baseConveyorCount + UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.ConveyorCount);
+        return 1 + UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.ConveyorCount);
     }
 
     public float GetEggIncomeMultiplier()
     {
-        return 1f + (UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.EggIncome) * 0.1f);
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.EggIncome);
+        return 1f + level * 0.1f; // +10% за уровень
     }
 
     public float GetEggExperienceMultiplier()
     {
-        return 1f + (UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.EggExperience) * 0.1f);
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.EggExperience);
+        return 1f + level * 0.1f; // +10% за уровень
     }
 
     public float GetDoubleIncomeChance()
     {
-        return UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleIncomeChance) * 0.03f;
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleIncomeChance);
+        return level * 0.03f; // +3% за уровень
     }
 
     public float GetDoubleExperienceChance()
     {
-        return UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleExperienceChance) * 0.03f;
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleExperienceChance);
+        return level * 0.03f; // +3% за уровень
     }
 
     public float GetEggCostReduction()
     {
-        return 1f - (UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.EggCostReduction) * 0.05f);
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.EggCostReduction);
+        return 1f - level * 0.05f; // -5% за уровень
     }
 
     public float GetDoubleEggSpawnChance()
     {
-        return UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleEggSpawnChance) * 0.03f;
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleEggSpawnChance);
+        return level * 0.03f; // +3% за уровень
     }
 
     public float GetDoubleEggPurchaseChance()
     {
-        return UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleEggPurchaseChance) * 0.03f;
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleEggPurchaseChance);
+        return level * 0.03f; // +3% за уровень
     }
 
     public float GetDoubleFruitSpeedChance()
     {
-        return UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleFruitSpeedChance) * 0.03f;
+        int level = UpgradeSystem.Instance.GetUpgradeLevel(UpgradeType.DoubleFruitSpeedChance);
+        return level * 0.03f; // +3% за уровень
     }
 }

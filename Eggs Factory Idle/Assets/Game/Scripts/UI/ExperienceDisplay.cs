@@ -1,11 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ExperienceDisplay : MonoBehaviour
 {
     [SerializeField] private Image experienceBar;
-    [SerializeField] private Text experienceText;
+    [SerializeField] private Text experienceText; // Предполагаю Text, как в CoinDisplay
     private bool isSubscribed;
 
     private void Start()
@@ -42,12 +41,11 @@ public class ExperienceDisplay : MonoBehaviour
         if (PlayerEconomy.Instance == null)
             return;
 
-        int currentExp = PlayerEconomy.Instance.GetExperience();
+        int currentExp = PlayerEconomy.Instance.GetExperience(); // Округляем до int
         int requiredExp = PlayerEconomy.Instance.GetExperienceForNextLevel();
         int level = PlayerEconomy.Instance.GetLevel();
 
         experienceBar.fillAmount = (float)currentExp / requiredExp;
-
         experienceText.text = $"Level {level}: {currentExp}/{requiredExp}";
     }
 }

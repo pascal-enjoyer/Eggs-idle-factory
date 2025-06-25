@@ -19,7 +19,7 @@ public class EggSpawner : MonoBehaviour
         for (int i = 0; i < eggCount; i++)
         {
             Vector2 offset = new Vector2(Random.Range(-0.1f, 0.1f), Random.Range(-0.1f, 0.1f));
-            GameObject eggObj = Instantiate(_eggPrefab, spawnPosition + offset, Quaternion.identity);
+            GameObject eggObj = Instantiate(_eggPrefab, spawnPosition + offset, Quaternion.identity, transform);
             if (eggObj.TryGetComponent(out IInitializableEgg egg))
             {
                 egg.Initialize(eggData);

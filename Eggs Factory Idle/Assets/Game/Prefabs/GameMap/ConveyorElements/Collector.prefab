@@ -74,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -650159093
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 85f65da25aad48e4a9b970e4007bd580, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -650159093
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c256b88cd5ac86140ac5d70014b1a59e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 9013748323236996003}
   - component: {fileID: 6057337168403160221}
   - component: {fileID: 6953727419523279990}
+  - component: {fileID: 8337745853125265463}
   m_Layer: 0
   m_Name: Collector
   m_TagString: Untagged
@@ -216,12 +217,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8164200639314731641}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935c3f72ebe751349828a2ac52fcbeef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   conveyorFloor: {fileID: 0}
+  coinTextPrefab: {fileID: 3018991667536743828, guid: 0aaa3fcf21815f441a7797fc5d5eb71e, type: 3}
+  bufferInterval: 0.2
 --- !u!61 &6953727419523279990
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -268,3 +271,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.7035322, y: 2.4178886}
   m_EdgeRadius: 0
+--- !u!114 &8337745853125265463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8164200639314731641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13af6520ec3c03645ab5274725727d86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  conveyorFloor: {fileID: 0}
+  coinTextPrefab: {fileID: 3018991667536743828, guid: 0aaa3fcf21815f441a7797fc5d5eb71e, type: 3}
+  bufferInterval: 0.2

@@ -48,8 +48,8 @@ public class UpgradeButton : MonoBehaviour
     {
         var level = UpgradeSystem.Instance.GetUpgradeLevel(upgradeType);
         var config = UpgradeSystem.Instance.GetUpgradeConfig(upgradeType);
-        levelText.text = $"Lv. {level}/{config.MaxLevel}";
-        costText.text = level < config.MaxLevel ? $"{config.CostPerLevel}" : "Макс";
+        levelText.text = $"Lv.{level}";
+        costText.text = level < config.MaxLevel ? $"{config.CostPerLevel}" : "Max";
         button.interactable = UpgradeSystem.Instance.CanPurchaseUpgrade(upgradeType);
     }
 }

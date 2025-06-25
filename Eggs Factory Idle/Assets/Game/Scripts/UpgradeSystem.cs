@@ -6,11 +6,11 @@ public class UpgradeSystem : MonoBehaviour
 {
     public static UpgradeSystem Instance { get; private set; }
 
-    [SerializeField] private UpgradeConfigSO upgradeConfig;
     private Dictionary<UpgradeType, UpgradeData> upgradeData = new Dictionary<UpgradeType, UpgradeData>();
     private int upgradePoints;
-
-    public event Action OnUpgradeChanged; // Событие для обновления UI
+    [SerializeField] private UpgradeConfigSO upgradeConfig;
+    public static event Action<UpgradeType> OnUpgradePurchased;
+    public static event Action OnUpgradeChanged;
 
     private void Awake()
     {
@@ -72,6 +72,7 @@ public class UpgradeSystem : MonoBehaviour
         SaveUpgradeLevel(type);
         ApplyUpgradeEffects(type);
         OnUpgradeChanged?.Invoke();
+        OnUpgradePurchased?.Invoke(type);
     }
 
     public void AddUpgradePoints(int points)
