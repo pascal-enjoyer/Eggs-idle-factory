@@ -1,62 +1,87 @@
 using UnityEngine;
 
-public class CircularSaw : MonoBehaviour
+public class CircularSaw : EggSplitter
 {
-    [SerializeField] private float activeTime = 1f; // Время активности пилы
-    [SerializeField] private float inactiveTime = 3f; // Время между активациями
     [SerializeField] private Transform activePosition; // Позиция, когда пила активна
     [SerializeField] private Transform inactivePosition; // Позиция, когда пила неактивна
     [SerializeField] private float moveDuration = 0.5f; // Длительность движения
     [SerializeField] private AnimationCurve moveCurve = AnimationCurve.Linear(0, 0, 1, 1); // Кривая анимации
     [SerializeField] private GameObject effectPrefab; // Префаб эффекта распиливания
 
-    private float timer;
-    private bool isActive;
     private bool isMoving;
     private float moveTimer;
     private Transform targetPosition;
 
-    private void Start()
+    protected override void Start()
     {
-        timer = inactiveTime;
+        base.Start();
+        if (activePosition == null || inactivePosition == null)
+        {
+            Debug.LogError($"CircularSaw: activePosition или inactivePosition не назначены на {gameObject.name}!");
+            return;
+        }
         transform.position = inactivePosition.position;
         targetPosition = inactivePosition;
+        Debug.Log($"CircularSaw: Инициализация на {gameObject.name}, стартовая позиция: {transform.position}");
     }
 
-    private void Update()
+    protected override void Update()
     {
-        timer -= Time.deltaTime;
-        if (timer <= 0 && !isMoving)
-        {
-            isActive = !isActive;
-            timer = isActive ? activeTime : inactiveTime;
-            targetPosition = isActive ? activePosition : inactivePosition;
-            isMoving = true;
-            moveTimer = 0f;
-        }
-
+        base.Update();
         if (isMoving)
         {
-            moveTimer += Time.deltaTime / moveDuration;
-            float t = moveCurve.Evaluate(moveTimer);
-            transform.position = Vector3.Lerp(transform.position, targetPosition.position, t);
-            if (moveTimer >= 1f)
-            {
-                isMoving = false;
-            }
+            MoveToTarget();
+        }
+    }
+
+    private void MoveToTarget()
+    {
+        moveTimer += Time.deltaTime / moveDuration;
+        float t = moveCurve.Evaluate(moveTimer);
+        transform.position = Vector3.Lerp(transform.position, targetPosition.position, t);
+        if (moveTimer >= 1f)
+        {
+            isMoving = false;
+            Debug.Log($"CircularSaw: Движение завершено на {gameObject.name}, текущая позиция: {transform.position}");
+        }
+    }
+
+    protected override void Activate()
+    {
+        isActive = true;
+        timer = activeTime;
+        targetPosition = activePosition;
+        isMoving = true;
+        moveTimer = 0f;
+        Debug.Log($"CircularSaw: Активация пилы на {gameObject.name}, целевая позиция: {targetPosition.position}");
+    }
+
+    protected override void Deactivate()
+    {
+        isActive = false;
+        timer = inactiveTime;
+        targetPosition = inactivePosition;
+        isMoving = true;
+        moveTimer = 0f;
+        Debug.Log($"CircularSaw: Деактивация пилы на {gameObject.name}, целевая позиция: {targetPosition.position}");
+    }
+
+    protected override void ProcessEggCollision(Egg egg, Vector3 collisionPosition)
+    {
+        if (isActive && egg != null && egg.CanBeSplitOnFloor())
+        {
+            egg.Split();
+            PlaySplitEffect(collisionPosition);
+            Debug.Log($"CircularSaw: Яйцо разрезано на {gameObject.name} в позиции {collisionPosition}");
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (isActive && other.gameObject.layer == LayerMask.NameToLayer("Egg"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Egg"))
         {
             Egg egg = other.GetComponent<Egg>();
-            if (egg != null && egg.CanBeSplitOnFloor())
-            {
-                egg.Split();
-                PlaySplitEffect(other.transform.position);
-            }
+            ProcessEggCollision(egg, other.transform.position);
         }
     }
 
@@ -64,7 +89,7 @@ public class CircularSaw : MonoBehaviour
     {
         if (effectPrefab == null)
         {
-            Debug.LogWarning("CircularSaw: effectPrefab не назначен!");
+            Debug.LogWarning($"CircularSaw: effectPrefab не назначен на {gameObject.name}!");
             return;
         }
 
@@ -82,7 +107,7 @@ public class CircularSaw : MonoBehaviour
             {
                 controller = effectInstance.AddComponent<EffectController>();
             }
-            Debug.Log($"CircularSaw: Воспроизведен эффект распиливания на позиции {position}");
+            Debug.Log($"CircularSaw: Воспроизведён эффект распиливания на позиции {position}");
         }
         else
         {

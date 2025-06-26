@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 
 public class AudioSettingsUI : MonoBehaviour
 {
@@ -11,8 +12,7 @@ public class AudioSettingsUI : MonoBehaviour
     [SerializeField] private Sprite soundOffSprite;
     [SerializeField] private Sprite musicOnSprite;
     [SerializeField] private Sprite musicOffSprite;
-
-    public Button deleteSaveButton;
+    [SerializeField] private AudioMixer audioMixer; // Добавляем ссылку на AudioMixer
 
     private IAudioService audioService;
     private const float VOLUME_THRESHOLD = 0.01f;
@@ -22,13 +22,8 @@ public class AudioSettingsUI : MonoBehaviour
         audioService = FindObjectOfType<AudioManager>();
         if (audioService == null)
         {
-            Debug.LogError("AudioManager not found in scene!");
+            Debug.LogError("AudioSettingsUI: AudioManager not found in scene!");
         }
-    }
-
-    public void OnDeleteSaveButtonClicked()
-    {
-        PlayerEconomy.Instance.DeleteAll();
     }
 
     private void Start()
@@ -54,14 +49,32 @@ public class AudioSettingsUI : MonoBehaviour
 
     private void OnSoundSliderChanged(float value)
     {
-        audioService.SetSoundVolume(value);
+        // Обрабатываем нулевую громкость для звуков
+        if (value <= VOLUME_THRESHOLD)
+        {
+            audioMixer.SetFloat("SoundVolume", -80f);
+        }
+        else
+        {
+            audioService.SetSoundVolume(value);
+        }
         UpdateSoundIcon(value);
+        Debug.Log($"AudioSettingsUI: Sound volume set to {value}");
     }
 
     private void OnMusicSliderChanged(float value)
     {
-        audioService.SetMusicVolume(value);
+        // Обрабатываем нулевую громкость для музыки
+        if (value <= VOLUME_THRESHOLD)
+        {
+            audioMixer.SetFloat("MusicVolume", -80f);
+        }
+        else
+        {
+            audioService.SetMusicVolume(value);
+        }
         UpdateMusicIcon(value);
+        Debug.Log($"AudioSettingsUI: Music volume set to {value}");
     }
 
     private void UpdateIcons()
