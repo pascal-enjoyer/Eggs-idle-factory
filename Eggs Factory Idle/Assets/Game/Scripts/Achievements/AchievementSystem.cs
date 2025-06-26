@@ -14,7 +14,7 @@ public class AchievementSystem : MonoBehaviour
                 GameObject go = new GameObject("AchievementSystem");
                 instance = go.AddComponent<AchievementSystem>();
                 DontDestroyOnLoad(go);
-                Debug.Log("AchievementSystem: Создан новый синглтон");
+                //Debug.Log("AchievementSystem: Создан новый синглтон");
             }
             return instance;
         }
@@ -22,6 +22,7 @@ public class AchievementSystem : MonoBehaviour
 
     [SerializeField] private List<AchievementData> achievements = new List<AchievementData>();
     public event Action<AchievementData> OnAchievementUpdated;
+    public event Action<AchievementData> OnAchievementLevelUp;
 
     private static bool applicationIsQuitting = false;
     private void Awake()
@@ -44,14 +45,14 @@ public class AchievementSystem : MonoBehaviour
         EggButton.OnEggPurchased += HandleEggPurchased;
         EggCollector.OnEggCollected += HandleEggCollected;
         UpgradeSystem.OnUpgradePurchased += HandleUpgradePurchased;
-        Debug.Log("AchievementSystem: Подписка на события выполнена");
+        //Debug.Log("AchievementSystem: Подписка на события выполнена");
     }
 
     private void OnDestroy()
     {
         if (instance == this && !applicationIsQuitting)
         {
-            Debug.LogWarning("AchievementSystem: Основной экземпляр уничтожается. Сбрасываем instance.");
+            //Debug.LogWarning("AchievementSystem: Основной экземпляр уничтожается. Сбрасываем instance.");
             Destroy(instance.gameObject);
         }
 
@@ -131,17 +132,18 @@ public class AchievementSystem : MonoBehaviour
                 {
                     achievement.CurrentProgress -= achievement.GetGoalForLevel(achievement.CurrentLevel);
                     achievement.CurrentLevel++;
-                    Debug.Log($"AchievementSystem: Достижение {achievement.AchievementName} достигло уровня {achievement.CurrentLevel}");
+                    OnAchievementLevelUp.Invoke(achievement);
+                    //Debug.Log($"AchievementSystem: Достижение {achievement.AchievementName} достигло уровня {achievement.CurrentLevel}");
                     // Воспроизведение звука достижения (ID "1")
                     var audioManager = FindObjectOfType<AudioManager>();
                     if (audioManager != null)
                     {
                         audioManager.PlaySound("1", Vector3.zero);
-                        Debug.Log($"AchievementSystem: Played achievement sound for {achievement.AchievementName}");
+                        //Debug.Log($"AchievementSystem: Played achievement sound for {achievement.AchievementName}");
                     }
                     else
                     {
-                        Debug.LogWarning("AchievementSystem: AudioManager не найден для воспроизведения звука достижения!");
+                        //Debug.LogWarning("AchievementSystem: AudioManager не найден для воспроизведения звука достижения!");
                     }
                 }
                 achievement.Save();

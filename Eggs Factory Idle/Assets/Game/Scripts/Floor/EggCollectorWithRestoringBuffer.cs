@@ -36,7 +36,7 @@ public class EggCollectorWithRestoringBuffer : MonoBehaviour, ICollector
         if (UnityEngine.Random.value < doubleIncomeChance)
         {
             coins *= 2f;
-            Debug.Log($"DoubleIncomeChance сработал, доход удвоен: {coins}");
+            //Debug.Log($"DoubleIncomeChance сработал, доход удвоен: {coins}");
         }
 
         coins *= GameModifiers.Instance != null ? GameModifiers.Instance.GetEggIncomeMultiplier() : 1f;
@@ -45,7 +45,7 @@ public class EggCollectorWithRestoringBuffer : MonoBehaviour, ICollector
         if (UnityEngine.Random.value < doubleExperienceChance)
         {
             experience *= 2f;
-            Debug.Log($"DoubleExperienceChance сработал, опыт удвоен: {experience}");
+            //Debug.Log($"DoubleExperienceChance сработал, опыт удвоен: {experience}");
         }
 
         experience *= GameModifiers.Instance != null ? GameModifiers.Instance.GetEggExperienceMultiplier() : 1f;
@@ -58,7 +58,7 @@ public class EggCollectorWithRestoringBuffer : MonoBehaviour, ICollector
         // Добавляем монеты в буфер и сбрасываем таймер
         coinBuffer += coins;
         bufferTimer = bufferInterval;
-        Debug.Log($"EggCollector: Добавлено {coins} монет в буфер, итого: {coinBuffer}, Позиция коллектора: {transform.position}");
+        //Debug.Log($"EggCollector: Добавлено {coins} монет в буфер, итого: {coinBuffer}, Позиция коллектора: {transform.position}");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -79,14 +79,14 @@ public class EggCollectorWithRestoringBuffer : MonoBehaviour, ICollector
     {
         if (coinTextPrefab == null)
         {
-            Debug.LogWarning("EggCollector: coinTextPrefab не назначен!");
+            //Debug.LogWarning("EggCollector: coinTextPrefab не назначен!");
             return;
         }
 
         Canvas canvas = UICanvasRef.Instance?.Canvas;
         if (canvas == null)
         {
-            Debug.LogWarning("EggCollector: UICanvasRef.Instance или Canvas не найдены!");
+            //Debug.LogWarning("EggCollector: UICanvasRef.Instance или Canvas не найдены!");
             return;
         }
 
@@ -95,11 +95,11 @@ public class EggCollectorWithRestoringBuffer : MonoBehaviour, ICollector
         if (coinText != null)
         {
             coinText.Initialize(coinBuffer, transform.position, canvas);
-            Debug.Log($"EggCollector: Спавн текста: +{Mathf.FloorToInt(coinBuffer)} монет");
+            //Debug.Log($"EggCollector: Спавн текста: +{Mathf.FloorToInt(coinBuffer)} монет");
         }
         else
         {
-            Debug.LogWarning("EggCollector: coinTextPrefab не содержит CoinText!");
+            //Debug.LogWarning("EggCollector: coinTextPrefab не содержит CoinText!");
             Destroy(textInstance);
         }
     }

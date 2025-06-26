@@ -4,7 +4,7 @@ using UnityEngine;
 public class ConveyorFloor : MonoBehaviour, IConveyorable
 {
     [SerializeField] private ConveyorManager converyorManager;
-    [SerializeField] private EggCollector collector;
+    [SerializeField] private EggCollectorWithRestoringBuffer collector;
     [SerializeField] private CircularSaw saw;
     [SerializeField] private bool isLastConveyor = true;
     public bool IsLastConveyor => isLastConveyor;
@@ -39,7 +39,7 @@ public class ConveyorFloor : MonoBehaviour, IConveyorable
         {
             converyorManager.MirrorDirection();
         }
-        Debug.Log($"ConveyorFloor: Зеркалирование на {gameObject.name}, rotation.y: {newYRotation}");
+        //Debug.Log($"ConveyorFloor: Зеркалирование на {gameObject.name}, rotation.y: {newYRotation}");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

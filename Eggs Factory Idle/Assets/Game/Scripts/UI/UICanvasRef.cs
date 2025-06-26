@@ -11,7 +11,7 @@ public class UICanvasRef : MonoBehaviour
         {
             if (applicationIsQuitting)
             {
-                Debug.LogWarning("UICanvasRef.Instance вызван во врем€ выхода приложени€.");
+               // Debug.LogWarning("UICanvasRef.Instance вызван во врем€ выхода приложени€.");
                 return null;
             }
 
@@ -40,7 +40,7 @@ public class UICanvasRef : MonoBehaviour
                 canvas = GetComponent<Canvas>();
                 if (canvas == null)
                 {
-                    Debug.LogWarning("UICanvasRef: Canvas не найден на объекте!");
+                    //Debug.LogWarning("UICanvasRef: Canvas не найден на объекте!");
                 }
             }
             return canvas;
@@ -51,7 +51,7 @@ public class UICanvasRef : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            Debug.LogWarning($"UICanvasRef: ќбнаружен дубликат синглтона на {gameObject.name}. ”ничтожаем этот экземпл€р.");
+            //Debug.LogWarning($"UICanvasRef: ќбнаружен дубликат синглтона на {gameObject.name}. ”ничтожаем этот экземпл€р.");
             Destroy(gameObject);
             return;
         }
@@ -59,19 +59,19 @@ public class UICanvasRef : MonoBehaviour
         canvas = GetComponent<Canvas>();
         if (canvas == null)
         {
-            Debug.LogWarning("UICanvasRef: Canvas не найден, добавл€ем новый.");
+            //Debug.LogWarning("UICanvasRef: Canvas не найден, добавл€ем новый.");
             canvas = gameObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = 100;
         }
-        Debug.Log("UICanvasRef: »нициализирован синглтон");
+        //Debug.Log("UICanvasRef: »нициализирован синглтон");
     }
 
     private void OnDestroy()
     {
         if (instance == this && !applicationIsQuitting)
         {
-            Debug.LogWarning("UICanvasRef: ќсновной экземпл€р уничтожаетс€. —брасываем instance.");
+            //Debug.LogWarning("UICanvasRef: ќсновной экземпл€р уничтожаетс€. —брасываем instance.");
             instance = null;
         }
     }

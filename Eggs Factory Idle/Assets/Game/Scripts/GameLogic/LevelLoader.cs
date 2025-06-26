@@ -4,7 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoader : MonoBehaviour
 {
-    [SerializeField] private string levelSceneName = "GameLevel";
+    public static string levelSceneName = "Level";
+    public static string mainMenuName = "MainMenu";
 
     public void LoadLevel()
     {
@@ -15,5 +16,15 @@ public class LevelLoader : MonoBehaviour
         }
 
         SceneManager.LoadScene(levelSceneName);
+    }
+    
+    public void CloseGame()
+    {
+        Application.Quit();
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(mainMenuName);
     }
 }

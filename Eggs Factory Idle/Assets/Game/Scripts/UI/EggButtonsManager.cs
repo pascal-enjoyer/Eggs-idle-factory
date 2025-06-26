@@ -25,7 +25,7 @@ public class EggButtonsManager : MonoBehaviour
             // Загружаем данные только для первого яйца или если оно разблокировано
             egg.IsUnlocked = (i == 0) || PlayerPrefs.GetInt($"Egg_{egg.EggName}_IsUnlocked", 0) == 1;
             egg.UpgradeLevel = PlayerPrefs.GetInt($"Egg_{egg.EggName}_UpgradeLevel", 0);
-            Debug.Log($"Загружено яйцо {egg.EggName}: IsUnlocked={egg.IsUnlocked}, UpgradeLevel={egg.UpgradeLevel}");
+            //Debug.Log($"Загружено яйцо {egg.EggName}: IsUnlocked={egg.IsUnlocked}, UpgradeLevel={egg.UpgradeLevel}");
         }
     }
 
@@ -54,7 +54,7 @@ public class EggButtonsManager : MonoBehaviour
             if (eggData.IsUnlocked && eggData.UpgradeLevel > 0)
             {
                 EggSpawnSystem.Instance.AddEgg(eggData);
-                Debug.Log($"Добавлен таймер для яйца {eggData.EggName} с уровнем {eggData.UpgradeLevel}");
+                //Debug.Log($"Добавлен таймер для яйца {eggData.EggName} с уровнем {eggData.UpgradeLevel}");
             }
         }
     }
@@ -63,7 +63,7 @@ public class EggButtonsManager : MonoBehaviour
     {
         if (_eggButtonPrefab == null || _buttonsParent == null)
         {
-            Debug.LogError("EggButtonsManager: Не заданы _eggButtonPrefab или _buttonsParent!");
+            //Debug.LogError("EggButtonsManager: Не заданы _eggButtonPrefab или _buttonsParent!");
             return;
         }
 

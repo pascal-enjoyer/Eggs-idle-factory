@@ -33,11 +33,11 @@ public class EggButton : MonoBehaviour
             PlayerEconomy.Instance.CoinsChanged += UpdateUI;
             isSubscribed = true;
             UpdateUI();
-            Debug.Log($"EggButton: Подписка на PlayerEconomy для {_eggData?.EggName} выполнена");
+            //Debug.Log($"EggButton: Подписка на PlayerEconomy для {_eggData?.EggName} выполнена");
         }
         else
         {
-            Debug.LogError("EggButton: PlayerEconomy.Instance не инициализирован!");
+            //Debug.LogError("EggButton: PlayerEconomy.Instance не инициализирован!");
         }
     }
 
@@ -117,7 +117,7 @@ public class EggButton : MonoBehaviour
                     EggSpawnSystem.Instance.AddEgg(_eggData);
                     UnlockNextEgg?.Invoke(_eggData);
                 }
-                Debug.Log($"DoubleEggPurchaseChance сработал, куплено второе яйцо бесплатно для {_eggData.EggName}");
+                //Debug.Log($"DoubleEggPurchaseChance сработал, куплено второе яйцо бесплатно для {_eggData.EggName}");
             }
 
             UpdateUI();

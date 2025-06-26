@@ -26,13 +26,13 @@ public static class EffectManager
     public static void RegisterEffect()
     {
         activeEffectsCount++;
-        Debug.Log($"EffectManager: Активных эффектов: {activeEffectsCount}");
+        //Debug.Log($"EffectManager: Активных эффектов: {activeEffectsCount}");
     }
 
     public static void UnregisterEffect()
     {
         activeEffectsCount = Mathf.Max(0, activeEffectsCount - 1);
-        Debug.Log($"EffectManager: Активных эффектов: {activeEffectsCount}");
+        //Debug.Log($"EffectManager: Активных эффектов: {activeEffectsCount}");
     }
 
     private static float GetCurrentInterval()

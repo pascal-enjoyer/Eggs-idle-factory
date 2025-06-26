@@ -54,7 +54,7 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            Debug.LogWarning($"PlayerEconomy: Обнаружен дубликат синглтона на {gameObject.name}. Уничтожаем этот экземпляр.");
+            //Debug.LogWarning($"PlayerEconomy: Обнаружен дубликат синглтона на {gameObject.name}. Уничтожаем этот экземпляр.");
             Destroy(gameObject);
             return;
         }
@@ -74,7 +74,7 @@ public class PlayerEconomy : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("PlayerEconomy: AudioManager не найден в сцене!");
+            //Debug.LogWarning("PlayerEconomy: AudioManager не найден в сцене!");
         }
     }
 
@@ -93,7 +93,7 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (instance == this && !applicationIsQuitting)
         {
-            Debug.LogWarning("PlayerEconomy: Основной экземпляр уничтожается. Сбрасываем instance.");
+            //Debug.LogWarning("PlayerEconomy: Основной экземпляр уничтожается. Сбрасываем instance.");
             instance = null;
         }
     }
@@ -107,14 +107,14 @@ public class PlayerEconomy : MonoBehaviour
     {
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(LevelLoader.mainMenuName);
     }
 
     public void AddCoins(float amount)
     {
         if (amount <= 0)
         {
-            Debug.LogWarning($"AddCoins вызван с неположительным значением: {amount}. Используйте SpendCoins для списания.");
+            //Debug.LogWarning($"AddCoins вызван с неположительным значением: {amount}. Используйте SpendCoins для списания.");
             return;
         }
 
@@ -122,14 +122,14 @@ public class PlayerEconomy : MonoBehaviour
         SaveCoins();
         CoinsChanged?.Invoke();
         OnCoinsAdded?.Invoke(amount);
-        Debug.Log($"Добавлено монет: {amount}, итого: {coins}");
+        //Debug.Log($"Добавлено монет: {amount}, итого: {coins}");
     }
 
     public void SpendCoins(float amount)
     {
         if (amount <= 0)
         {
-            Debug.LogWarning($"SpendCoins вызван с неположительным значением: {amount}");
+            //Debug.LogWarning($"SpendCoins вызван с неположительным значением: {amount}");
             return;
         }
 
@@ -138,11 +138,11 @@ public class PlayerEconomy : MonoBehaviour
             coins -= amount;
             SaveCoins();
             CoinsChanged?.Invoke();
-            Debug.Log($"Списано монет: {amount}, итого: {coins}");
+            //Debug.Log($"Списано монет: {amount}, итого: {coins}");
         }
         else
         {
-            Debug.LogWarning($"Недостаточно монет для списания: требуется {amount}, есть {coins}");
+            //Debug.LogWarning($"Недостаточно монет для списания: требуется {amount}, есть {coins}");
         }
     }
 
@@ -150,7 +150,7 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (amount < 0)
         {
-            Debug.LogWarning($"HaveEnoughCoinsToBuy вызван с отрицательным значением: {amount}");
+            //Debug.LogWarning($"HaveEnoughCoinsToBuy вызван с отрицательным значением: {amount}");
             amount = Mathf.Abs(amount);
         }
 
@@ -171,7 +171,7 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (amount <= 0)
         {
-            Debug.LogWarning($"AddExperience вызван с неположительным значением: {amount}");
+            //Debug.LogWarning($"AddExperience вызван с неположительным значением: {amount}");
             return;
         }
 
@@ -190,16 +190,16 @@ public class PlayerEconomy : MonoBehaviour
             if (audioManager != null)
             {
                 audioManager.PlaySound("0", Vector3.zero);
-                Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
+                //Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
             }
             else
             {
-                Debug.LogWarning("PlayerEconomy: AudioManager не найден для воспроизведения звука уровня!");
+                //Debug.LogWarning("PlayerEconomy: AudioManager не найден для воспроизведения звука уровня!");
             }
         }
         SaveExperienceAndLevel();
         ExperienceChanged?.Invoke();
-        Debug.Log($"Добавлено опыта: {amount}, итого: {experience}");
+        //Debug.Log($"Добавлено опыта: {amount}, итого: {experience}");
     }
 
     public int GetExperience()

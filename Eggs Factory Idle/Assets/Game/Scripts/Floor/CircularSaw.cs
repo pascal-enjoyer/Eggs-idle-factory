@@ -17,12 +17,12 @@ public class CircularSaw : EggSplitter
         base.Start();
         if (activePosition == null || inactivePosition == null)
         {
-            Debug.LogError($"CircularSaw: activePosition или inactivePosition не назначены на {gameObject.name}!");
+            //Debug.LogError($"CircularSaw: activePosition или inactivePosition не назначены на {gameObject.name}!");
             return;
         }
         transform.position = inactivePosition.position;
         targetPosition = inactivePosition;
-        Debug.Log($"CircularSaw: »нициализаци€ на {gameObject.name}, стартова€ позици€: {transform.position}");
+        //Debug.Log($"CircularSaw: »нициализаци€ на {gameObject.name}, стартова€ позици€: {transform.position}");
     }
 
     protected override void Update()
@@ -42,7 +42,7 @@ public class CircularSaw : EggSplitter
         if (moveTimer >= 1f)
         {
             isMoving = false;
-            Debug.Log($"CircularSaw: ƒвижение завершено на {gameObject.name}, текуща€ позици€: {transform.position}");
+            //Debug.Log($"CircularSaw: ƒвижение завершено на {gameObject.name}, текуща€ позици€: {transform.position}");
         }
     }
 
@@ -53,7 +53,7 @@ public class CircularSaw : EggSplitter
         targetPosition = activePosition;
         isMoving = true;
         moveTimer = 0f;
-        Debug.Log($"CircularSaw: јктиваци€ пилы на {gameObject.name}, целева€ позици€: {targetPosition.position}");
+        //Debug.Log($"CircularSaw: јктиваци€ пилы на {gameObject.name}, целева€ позици€: {targetPosition.position}");
     }
 
     protected override void Deactivate()
@@ -63,7 +63,7 @@ public class CircularSaw : EggSplitter
         targetPosition = inactivePosition;
         isMoving = true;
         moveTimer = 0f;
-        Debug.Log($"CircularSaw: ƒеактиваци€ пилы на {gameObject.name}, целева€ позици€: {targetPosition.position}");
+        //Debug.Log($"CircularSaw: ƒеактиваци€ пилы на {gameObject.name}, целева€ позици€: {targetPosition.position}");
     }
 
     protected override void ProcessEggCollision(Egg egg, Vector3 collisionPosition)
@@ -72,7 +72,7 @@ public class CircularSaw : EggSplitter
         {
             egg.Split();
             PlaySplitEffect(collisionPosition);
-            Debug.Log($"CircularSaw: яйцо разрезано на {gameObject.name} в позиции {collisionPosition}");
+            //Debug.Log($"CircularSaw: яйцо разрезано на {gameObject.name} в позиции {collisionPosition}");
         }
     }
 
@@ -89,13 +89,13 @@ public class CircularSaw : EggSplitter
     {
         if (effectPrefab == null)
         {
-            Debug.LogWarning($"CircularSaw: effectPrefab не назначен на {gameObject.name}!");
+            //Debug.LogWarning($"CircularSaw: effectPrefab не назначен на {gameObject.name}!");
             return;
         }
 
         if (!IsPositionInCameraView(position))
         {
-            Debug.Log($"CircularSaw: Ёффект пропущен, позици€ {position} вне камеры");
+            //Debug.Log($"CircularSaw: Ёффект пропущен, позици€ {position} вне камеры");
             return;
         }
 
@@ -107,11 +107,11 @@ public class CircularSaw : EggSplitter
             {
                 controller = effectInstance.AddComponent<EffectController>();
             }
-            Debug.Log($"CircularSaw: ¬оспроизведЄн эффект распиливани€ на позиции {position}");
+            //Debug.Log($"CircularSaw: ¬оспроизведЄн эффект распиливани€ на позиции {position}");
         }
         else
         {
-            Debug.Log($"CircularSaw: Ёффект пропущен из-за ограничений (активных эффектов: {EffectManager.ActiveEffectsCount})");
+            //Debug.Log($"CircularSaw: Ёффект пропущен из-за ограничений (активных эффектов: {EffectManager.ActiveEffectsCount})");
         }
     }
 
@@ -120,7 +120,7 @@ public class CircularSaw : EggSplitter
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
-            Debug.LogWarning("CircularSaw: Camera.main не найдена!");
+           // Debug.LogWarning("CircularSaw: Camera.main не найдена!");
             return false;
         }
 

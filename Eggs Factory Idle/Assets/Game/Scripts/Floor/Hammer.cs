@@ -36,13 +36,13 @@ public class Hammer : EggSplitter
         hammerCollider = GetComponent<BoxCollider2D>();
         if (hammerCollider == null)
         {
-            Debug.LogError($"Hammer: BoxCollider2D отсутствует на {gameObject.name}!");
+           // Debug.LogError($"Hammer: BoxCollider2D отсутствует на {gameObject.name}!");
             return;
         }
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
         {
-            Debug.LogError($"Hammer: SpriteRenderer отсутствует на {gameObject.name}!");
+            //Debug.LogError($"Hammer: SpriteRenderer отсутствует на {gameObject.name}!");
             return;
         }
         hammerCollider.isTrigger = true;
@@ -52,7 +52,7 @@ public class Hammer : EggSplitter
         transform.localRotation = Quaternion.Euler(0, 0, startAngle);
         isCharging = true;
         SetAlpha(1f); // Полная непрозрачность при старте
-        Debug.Log($"Hammer: Инициализация на {gameObject.name}, стартовый угол: {startAngle}, chargeDuration: {chargeDuration}, hitDuration: {hitDuration}, minChargeAlpha: {minChargeAlpha}, parent rotationY: {(transform.parent != null ? transform.parent.localRotation.eulerAngles.y : 0f)}, время: {Time.time}");
+        //Debug.Log($"Hammer: Инициализация на {gameObject.name}, стартовый угол: {startAngle}, chargeDuration: {chargeDuration}, hitDuration: {hitDuration}, minChargeAlpha: {minChargeAlpha}, parent rotationY: {(transform.parent != null ? transform.parent.localRotation.eulerAngles.y : 0f)}, время: {Time.time}");
     }
 
     protected override void Update()
@@ -78,7 +78,7 @@ public class Hammer : EggSplitter
         {
             float alpha = Mathf.Lerp(1f, minChargeAlpha, t);
             SetAlpha(alpha);
-            Debug.Log($"Hammer: Зарядка на {gameObject.name}, alpha: {alpha}, t: {t}, время: {Time.time}");
+            //Debug.Log($"Hammer: Зарядка на {gameObject.name}, alpha: {alpha}, t: {t}, время: {Time.time}");
         }
         else
         {
@@ -93,13 +93,13 @@ public class Hammer : EggSplitter
             {
                 hammerCollider.enabled = true;
                 isColliderActive = true;
-                Debug.Log($"Hammer: Коллайдер включён на {gameObject.name}, время: {Time.time}");
+                //Debug.Log($"Hammer: Коллайдер включён на {gameObject.name}, время: {Time.time}");
             }
             else if (colliderTimer > colliderActiveTime && isColliderActive)
             {
                 hammerCollider.enabled = false;
                 isColliderActive = false;
-                Debug.Log($"Hammer: Коллайдер выключен на {gameObject.name}, время: {Time.time}");
+                //Debug.Log($"Hammer: Коллайдер выключен на {gameObject.name}, время: {Time.time}");
             }
         }
 
@@ -107,7 +107,7 @@ public class Hammer : EggSplitter
         {
             isAnimating = false;
             startAngle = targetAngle; // Обновляем стартовый угол для следующей анимации
-            Debug.Log($"Hammer: Анимация {(isCharging ? "зарядки" : "удара")} завершена на {gameObject.name}, текущий угол: {currentAngle}, alpha: {spriteRenderer.color.a}, длительность: {duration}, время: {Time.time}");
+            //Debug.Log($"Hammer: Анимация {(isCharging ? "зарядки" : "удара")} завершена на {gameObject.name}, текущий угол: {currentAngle}, alpha: {spriteRenderer.color.a}, длительность: {duration}, время: {Time.time}");
         }
     }
 
@@ -122,7 +122,7 @@ public class Hammer : EggSplitter
         animationTimer = 0f;
         colliderTimer = 0f;
         SetAlpha(1f); // Полная непрозрачность при ударе
-        Debug.Log($"Hammer: Активация на {gameObject.name}, стартовый угол: {startAngle}, целевой угол: {targetAngle}, hitDuration: {hitDuration}, время: {Time.time}");
+        //Debug.Log($"Hammer: Активация на {gameObject.name}, стартовый угол: {startAngle}, целевой угол: {targetAngle}, hitDuration: {hitDuration}, время: {Time.time}");
     }
 
     protected override void Deactivate()
@@ -137,7 +137,7 @@ public class Hammer : EggSplitter
         colliderTimer = 0f;
         hammerCollider.enabled = false;
         isColliderActive = false;
-        Debug.Log($"Hammer: Деактивация на {gameObject.name}, стартовый угол: {startAngle}, целевой угол: {targetAngle}, chargeDuration: {chargeDuration}, время: {Time.time}");
+        //Debug.Log($"Hammer: Деактивация на {gameObject.name}, стартовый угол: {startAngle}, целевой угол: {targetAngle}, chargeDuration: {chargeDuration}, время: {Time.time}");
     }
 
     protected override void ProcessEggCollision(Egg egg, Vector3 collisionPosition)
@@ -146,7 +146,7 @@ public class Hammer : EggSplitter
         {
             egg.Split();
             PlaySplitEffect(collisionPosition);
-            Debug.Log($"Hammer: Яйцо разбито на {gameObject.name} в позиции {collisionPosition}, время: {Time.time}");
+            //Debug.Log($"Hammer: Яйцо разбито на {gameObject.name} в позиции {collisionPosition}, время: {Time.time}");
         }
     }
 
@@ -163,13 +163,13 @@ public class Hammer : EggSplitter
     {
         if (effectPrefab == null)
         {
-            Debug.LogWarning($"Hammer: effectPrefab не назначен на {gameObject.name}!");
+            //Debug.LogWarning($"Hammer: effectPrefab не назначен на {gameObject.name}!");
             return;
         }
 
         if (!IsPositionInCameraView(position))
         {
-            Debug.Log($"Hammer: Эффект пропущен, позиция {position} вне камеры, время: {Time.time}");
+            //Debug.Log($"Hammer: Эффект пропущен, позиция {position} вне камеры, время: {Time.time}");
             return;
         }
 
@@ -181,11 +181,11 @@ public class Hammer : EggSplitter
             {
                 controller = effectInstance.AddComponent<EffectController>();
             }
-            Debug.Log($"Hammer: Воспроизведён эффект разбивания на позиции {position}, время: {Time.time}");
+            //Debug.Log($"Hammer: Воспроизведён эффект разбивания на позиции {position}, время: {Time.time}");
         }
         else
         {
-            Debug.Log($"Hammer: Эффект пропущен из-за ограничений (активных эффектов: {EffectManager.ActiveEffectsCount}), время: {Time.time}");
+            //Debug.Log($"Hammer: Эффект пропущен из-за ограничений (активных эффектов: {EffectManager.ActiveEffectsCount}), время: {Time.time}");
         }
     }
 
@@ -194,7 +194,7 @@ public class Hammer : EggSplitter
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
-            Debug.LogWarning($"Hammer: Camera.main не найдена, время: {Time.time}");
+            //Debug.LogWarning($"Hammer: Camera.main не найдена, время: {Time.time}");
             return false;
         }
 

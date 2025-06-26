@@ -14,13 +14,13 @@ public class CoinTextEffect : MonoBehaviour
     {
         if (text == null)
         {
-            Debug.LogWarning("CoinText: TextMeshProUGUI не назначен!");
+            //Debug.LogWarning("CoinText: TextMeshProUGUI не назначен!");
             return;
         }
 
         if (canvas == null)
         {
-            Debug.LogWarning("CoinText: Canvas не передан!");
+            //Debug.LogWarning("CoinText: Canvas не передан!");
             return;
         }
 
@@ -33,13 +33,13 @@ public class CoinTextEffect : MonoBehaviour
 
         // Устанавливаем как первый дочерний элемент, чтобы рендериться под другими UI
         rect.SetAsFirstSibling();
-        Debug.Log($"CoinText: Установлен как первый дочерний, индекс: {rect.GetSiblingIndex()}");
+        //Debug.Log($"CoinText: Установлен как первый дочерний, индекс: {rect.GetSiblingIndex()}");
 
         // Конвертируем мировую позицию в локальную позицию Canvas
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
-            Debug.LogWarning("CoinText: Camera.main не найдена!");
+            //Debug.LogWarning("CoinText: Camera.main не найдена!");
             return;
         }
 
@@ -49,11 +49,11 @@ public class CoinTextEffect : MonoBehaviour
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, canvas.worldCamera, out localPos))
         {
             rect.anchoredPosition = localPos;
-            Debug.Log($"CoinText: Мировая позиция: {worldPosition}, Экранная: {screenPos}, Локальная: {localPos}");
+            //Debug.Log($"CoinText: Мировая позиция: {worldPosition}, Экранная: {screenPos}, Локальная: {localPos}");
         }
         else
         {
-            Debug.LogWarning("CoinText: Не удалось преобразовать координаты!");
+            //Debug.LogWarning("CoinText: Не удалось преобразовать координаты!");
             rect.anchoredPosition = Vector2.zero;
         }
 

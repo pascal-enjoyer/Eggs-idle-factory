@@ -7,6 +7,8 @@ public class Egg : MonoBehaviour, IInitializableEgg, IMoveable, ICollectable
     private Rigidbody2D rb2D;
     private EggData eggData;
 
+    public EggData EggData => eggData;
+
     private int currentFloorIndex = -1;
 
     private void Awake()
@@ -24,6 +26,7 @@ public class Egg : MonoBehaviour, IInitializableEgg, IMoveable, ICollectable
 
     public void Move(Vector2 direction, float speed)
     {
+        speed *= Random.Range(-0.1f, 1.85f);
         rb2D.AddForce(direction.normalized * speed, ForceMode2D.Force);
     }
 
