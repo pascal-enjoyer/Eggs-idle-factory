@@ -3,7 +3,6 @@ using UnityEngine.Audio;
 using System.Collections.Generic;
 using System;
 
-// Интерфейс для управления звуками
 public interface IAudioService
 {
     void PlaySound(string soundId, Vector3 position, float volume = 1f);
@@ -17,7 +16,6 @@ public interface IAudioService
     float GetMusicVolume();
 }
 
-// Настройки звука
 [Serializable]
 public class AudioSettings
 {
@@ -26,10 +24,6 @@ public class AudioSettings
     public float musicVolume = 1f;
 }
 
-// Синглтон для управления настройками звука
-
-
-// Класс для хранения данных о звуке
 [Serializable]
 public class Sound
 {
@@ -53,10 +47,11 @@ public class AudioManager : MonoBehaviour, IAudioService
     private AudioSource currentMusicSource;
     private readonly List<AudioSource> activeSoundSources = new List<AudioSource>();
     private AudioSettingsManager settingsManager;
-    private int currentMusicIndex = 0; // Для чередования музыки "0" и "1"
 
     private void Awake()
     {
+        Debug.Log("AudioManager: Установлен максимальный FPS (targetFrameRate = -1, VSync отключён)");
+
         InitializeDictionaries();
         settingsManager = AudioSettingsManager.Instance;
         ApplySavedSettings();
@@ -64,9 +59,7 @@ public class AudioManager : MonoBehaviour, IAudioService
 
     private void Start()
     {
-        // Запускаем первую музыку и настраиваем циклическое воспроизведение
         PlayNextMusic();
-
     }
 
     private void InitializeDictionaries()
@@ -125,9 +118,8 @@ public class AudioManager : MonoBehaviour, IAudioService
     private void PlayNextMusic()
     {
         // Чередуем музыку с ID "0" и "1"
-        string musicId = currentMusicIndex % 2 == 0 ? "0" : "1";
+        string musicId = "0";
         PlayMusic(musicId);
-        currentMusicIndex++;
     }
 
     private System.Collections.IEnumerator WaitForMusicEnd(float duration)
@@ -163,7 +155,6 @@ public class AudioManager : MonoBehaviour, IAudioService
             Destroy(source.gameObject);
         }
     }
-
 
     public void SetMasterVolume(float volume)
     {

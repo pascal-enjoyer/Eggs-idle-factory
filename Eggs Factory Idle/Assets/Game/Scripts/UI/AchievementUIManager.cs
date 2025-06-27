@@ -19,7 +19,22 @@ public class AchievementUIManager : MonoBehaviour
             Debug.LogError("AchievementUIManager: AchievementSystem.Instance не инициализирован!");
         }
     }
+    private void OnEnable()
+    {
+        if (AchievementSystem.Instance != null)
+        {
+            AchievementSystem.Instance.OnAchievementUpdated += UpdateAchievementUI;
+            InitializeUI();
+        }
+    }
 
+    private void OnDisable()
+    {
+        if (AchievementSystem.Instance != null)
+        {
+            AchievementSystem.Instance.OnAchievementUpdated -= UpdateAchievementUI;
+        }
+    }
     private void OnDestroy()
     {
         if (AchievementSystem.Instance != null)

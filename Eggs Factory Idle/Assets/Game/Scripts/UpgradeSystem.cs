@@ -23,6 +23,15 @@ public class UpgradeSystem : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         InitializeUpgrades();
         LoadUpgradePoints();
+        PlayerEconomy.Instance.LevelChanged += OnPlayerLevelChanged;
+    }
+
+    private void OnDestroy()
+    {
+        if (Instance == this && PlayerEconomy.Instance != null)
+        {
+            PlayerEconomy.Instance.LevelChanged -= OnPlayerLevelChanged;
+        }
     }
 
     private void InitializeUpgrades()
@@ -55,9 +64,16 @@ public class UpgradeSystem : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public bool IsUpgradeUnlocked(UpgradeType type)
+    {
+        int playerLevel = PlayerEconomy.Instance.GetLevel();
+        int requiredLevel = (int)type + 1; // Каждый апгрейд открывается на уровне, равном его индексу + 1
+        return playerLevel >= requiredLevel;
+    }
+
     public bool CanPurchaseUpgrade(UpgradeType type)
     {
-        if (!upgradeData.ContainsKey(type)) return false;
+        if (!upgradeData.ContainsKey(type) || !IsUpgradeUnlocked(type)) return false;
         var data = upgradeData[type];
         return data.CurrentLevel < data.MaxLevel && upgradePoints >= data.CostPerLevel;
     }
@@ -65,14 +81,19 @@ public class UpgradeSystem : MonoBehaviour
     public void PurchaseUpgrade(UpgradeType type)
     {
         if (!CanPurchaseUpgrade(type)) return;
+
         var data = upgradeData[type];
         upgradePoints -= data.CostPerLevel;
         data.CurrentLevel++;
+
         SaveUpgradePoints();
         SaveUpgradeLevel(type);
         ApplyUpgradeEffects(type);
-        OnUpgradeChanged?.Invoke();
+
         OnUpgradePurchased?.Invoke(type);
+        OnUpgradeChanged?.Invoke();
+
+        Debug.Log($"Upgrade purchased: {type}, new level: {data.CurrentLevel}");
     }
 
     public void AddUpgradePoints(int points)
@@ -94,6 +115,11 @@ public class UpgradeSystem : MonoBehaviour
     private void ApplyUpgradeEffects(UpgradeType type)
     {
         GameModifiers.Instance.UpdateModifiers();
+    }
+
+    private void OnPlayerLevelChanged()
+    {
+        OnUpgradeChanged?.Invoke(); // Обновляем UI при изменении уровня игрока
     }
 
     public void AddListener(Action listener) => OnUpgradeChanged += listener;

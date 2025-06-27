@@ -1,0 +1,12 @@
+# ninja log v5
+168	644	7726747901876118	FramePacing/CMakeFiles/swappywrapper.dir/UnitySwappyWrapper.cpp.o	3c9bfccd7da5adfb
+80	1168	7726747906961045	GameActivity/CMakeFiles/game.dir/UGAInputKeyEvent.cpp.o	672659ff7b0cafb2
+41	1174	7726747907236436	GameActivity/CMakeFiles/game.dir/UGAConfiguration.cpp.o	b668887acf5a6c6d
+102	1185	7726747907303438	GameActivity/CMakeFiles/game.dir/UGAEntry.cpp.o	8d3dc7480e755031
+645	1218	7726747907448750	D:/github/Eggs-idle-factory/Eggs Factory Idle/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2s2t3j4v/obj/arm64-v8a/libswappywrapper.so	b91a1b8c69dc4629
+124	1226	7726747907714981	GameActivity/CMakeFiles/game.dir/UGAInputMotionEvent.cpp.o	6d24466e5385d2d0
+1	1287	7726747908418592	GameActivity/CMakeFiles/game.dir/UGADebug.cpp.o	febdd9980325d32
+145	1289	7726747908387616	GameActivity/CMakeFiles/game.dir/UGASoftKeyboard.cpp.o	544c56cd4fe49268
+59	1487	7726747910437088	GameActivity/CMakeFiles/game.dir/UGAInput.cpp.o	fef864bc5a3b801e
+22	1594	7726747911461980	GameActivity/CMakeFiles/game.dir/UGAApplication.cpp.o	4c18ed1cbc385b6e
+1594	1713	7726747912746208	D:/github/Eggs-idle-factory/Eggs Factory Idle/Library/Bee/Android/Prj/IL2CPP/Gradle/unityLibrary/build/intermediates/cxx/RelWithDebInfo/2s2t3j4v/obj/arm64-v8a/libgame.so	b0c3ed0f6d74bd57

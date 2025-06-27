@@ -9,22 +9,25 @@ public class AchievementSystem : MonoBehaviour
     {
         get
         {
-            if (instance == null)
+            if (instance == null && !applicationIsQuitting)
             {
                 GameObject go = new GameObject("AchievementSystem");
                 instance = go.AddComponent<AchievementSystem>();
                 DontDestroyOnLoad(go);
-                //Debug.Log("AchievementSystem: Создан новый синглтон");
+                instance.Initialize();
             }
             return instance;
         }
     }
+
 
     [SerializeField] private List<AchievementData> achievements = new List<AchievementData>();
     public event Action<AchievementData> OnAchievementUpdated;
     public event Action<AchievementData> OnAchievementLevelUp;
 
     private static bool applicationIsQuitting = false;
+    private bool isInitialized = false;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -34,10 +37,18 @@ public class AchievementSystem : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(gameObject);
-        LoadAchievements();
+        Initialize();
     }
 
-    private void Start()
+    private void Initialize()
+    {
+        if (isInitialized) return;
+
+        LoadAchievements();
+        SubscribeToEvents();
+        isInitialized = true;
+    }
+    private void SubscribeToEvents()
     {
         PlayerEconomy.OnCoinsAdded += HandleCoinsAdded;
         PlayerEconomy.OnExperienceAdded += HandleExperienceAdded;
@@ -45,17 +56,9 @@ public class AchievementSystem : MonoBehaviour
         EggButton.OnEggPurchased += HandleEggPurchased;
         EggCollector.OnEggCollected += HandleEggCollected;
         UpgradeSystem.OnUpgradePurchased += HandleUpgradePurchased;
-        //Debug.Log("AchievementSystem: Подписка на события выполнена");
     }
-
-    private void OnDestroy()
+    private void UnsubscribeFromEvents()
     {
-        if (instance == this && !applicationIsQuitting)
-        {
-            //Debug.LogWarning("AchievementSystem: Основной экземпляр уничтожается. Сбрасываем instance.");
-            Destroy(instance.gameObject);
-        }
-
         PlayerEconomy.OnCoinsAdded -= HandleCoinsAdded;
         PlayerEconomy.OnExperienceAdded -= HandleExperienceAdded;
         PlayerEconomy.OnLevelUp -= HandleLevelUp;
@@ -63,12 +66,23 @@ public class AchievementSystem : MonoBehaviour
         EggCollector.OnEggCollected -= HandleEggCollected;
         UpgradeSystem.OnUpgradePurchased -= HandleUpgradePurchased;
     }
+    private void Start()
+    {
+        SubscribeToEvents();
+        //Debug.Log("AchievementSystem: Подписка на события выполнена");
+    }
 
+    private void OnDestroy()
+    {
+        if (instance == this && !applicationIsQuitting)
+        {
+            UnsubscribeFromEvents();
+        }
+    }
     private void OnApplicationQuit()
     {
         applicationIsQuitting = true;
     }
-
     private void LoadAchievements()
     {
         foreach (var achievement in achievements)
@@ -77,10 +91,12 @@ public class AchievementSystem : MonoBehaviour
         }
     }
 
+
     public List<AchievementData> GetAchievements()
     {
         return achievements;
     }
+
 
     private void HandleCoinsAdded(float amount)
     {

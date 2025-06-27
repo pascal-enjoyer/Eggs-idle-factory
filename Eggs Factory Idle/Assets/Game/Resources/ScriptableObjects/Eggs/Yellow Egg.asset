@@ -15,5 +15,5 @@ MonoBehaviour:
   EggSprite: {fileID: 21300000, guid: faca525030ba4854d9a6e1f6a9fd4c47, type: 3}
   EggName: Yellow Egg
   BaseSpawnInterval: 4
-  BaseUpgradeCost: 50
-  BaseIncome: 4
+  BaseUpgradeCost: 100
+  BaseIncome: 10

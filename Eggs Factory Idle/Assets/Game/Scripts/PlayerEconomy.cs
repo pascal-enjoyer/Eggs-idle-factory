@@ -63,31 +63,6 @@ public class PlayerEconomy : MonoBehaviour
         LoadData();
     }
 
-    private void Start()
-    {
-        // Запускаем музыку с ID "0" и настраиваем цикл
-        var audioManager = FindObjectOfType<AudioManager>();
-        if (audioManager != null)
-        {
-            audioManager.PlayMusic("0");
-            StartCoroutine(CycleMusic(audioManager));
-        }
-        else
-        {
-            //Debug.LogWarning("PlayerEconomy: AudioManager не найден в сцене!");
-        }
-    }
-
-    private System.Collections.IEnumerator CycleMusic(AudioManager audioManager)
-    {
-        while (true)
-        {
-            // Ожидаем окончания текущего трека (примерно, точная длительность обрабатывается в AudioManager)
-            yield return new WaitForSeconds(60f); // Замените на реальную длительность трека или используйте clip.length
-            string nextMusicId = audioManager.GetMusicVolume() == 0 ? "0" : (audioManager.GetMusicVolume() == 1 ? "0" : "1");
-            audioManager.PlayMusic(nextMusicId);
-        }
-    }
 
     private void OnDestroy()
     {
@@ -105,8 +80,21 @@ public class PlayerEconomy : MonoBehaviour
 
     public void DeleteAll()
     {
+        // 1. Сброс значений в памяти
+        coins = 0;
+        experience = 0;
+        level = 0;
+
+        // 2. Очистка PlayerPrefs
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+
+        // 3. Уведомление подписчиков (если нужно)
+        CoinsChanged?.Invoke();
+        ExperienceChanged?.Invoke();
+        LevelChanged?.Invoke();
+
+        // 4. Перезагрузка сцены (если требуется)
         SceneManager.LoadScene(LevelLoader.mainMenuName);
     }
 
@@ -182,7 +170,7 @@ public class PlayerEconomy : MonoBehaviour
         {
             experience -= GetExperienceForNextLevel(level);
             level++;
-            UpgradeSystem.Instance?.AddUpgradePoints(5);
+            UpgradeSystem.Instance?.AddUpgradePoints(level / 5 + 2);
             LevelChanged?.Invoke();
             OnLevelUp?.Invoke(level);
             // Воспроизведение звука повышения уровня (ID "0")

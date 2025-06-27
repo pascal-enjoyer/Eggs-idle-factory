@@ -6,22 +6,22 @@ using System;
 public class UpgradeMenu : MonoBehaviour
 {
     [Header("Левая панель")]
-    [SerializeField] private UpgradeButtonsManager buttonsManager; // Ссылка на UpgradeButtonsManager
-    [SerializeField] private UpgradeConfigSO upgradeConfig; // Конфигурация апгрейдов
+    [SerializeField] private UpgradeButtonsManager buttonsManager;
+    [SerializeField] private UpgradeConfigSO upgradeConfig;
 
     [Header("Правая панель")]
-    [SerializeField] private Text descriptionText; // Текст описания
-    [SerializeField] private Text levelText; // Текст уровня апгрейда
-    [SerializeField] private Text effectText; // Текст суммарного эффекта
-    [SerializeField] private Button buyButton; // Кнопка покупки
-    [SerializeField] private Text buyCostText; // Текст стоимости покупки
+    [SerializeField] private Text descriptionText; // Предполагается, что это Text
+    [SerializeField] private Text levelText;
+    [SerializeField] private Text effectText;
+    [SerializeField] private Button buyButton;
+    [SerializeField] private Text buyCostText;
 
     [Header("Информация игрока")]
-    [SerializeField] private Text playerLevelText; // Текст уровня игрока
-    [SerializeField] private Text upgradePointsText; // Текст очков апгрейда
+    [SerializeField] private Text playerLevelText;
+    [SerializeField] private Text upgradePointsText;
 
-    private UpgradeType selectedUpgrade; // Текущий выбранный апгрейд
-    private bool isUpgradeSelected; // Флаг выбора апгрейда
+    private UpgradeType selectedUpgrade;
+    private bool isUpgradeSelected;
 
     private void Start()
     {
@@ -39,10 +39,9 @@ public class UpgradeMenu : MonoBehaviour
         buttonsManager.OnUpgradeSelected += OnUpgradeSelected;
         UpgradeSystem.OnUpgradeChanged += UpdateUI;
         PlayerEconomy.Instance.LevelChanged += UpdatePlayerInfo;
-        PlayerEconomy.Instance.CoinsChanged += UpdatePlayerInfo; // На случай, если очки зависят от монет
+        PlayerEconomy.Instance.CoinsChanged += UpdatePlayerInfo;
         buyButton.onClick.AddListener(OnBuyButtonClick);
 
-        // Инициализация UI
         UpdatePlayerInfo();
         UpdateRightPanel(null);
     }
@@ -81,11 +80,12 @@ public class UpgradeMenu : MonoBehaviour
         }
 
         int currentLevel = UpgradeSystem.Instance.GetUpgradeLevel(upgradeInfo.Type);
-        descriptionText.text = upgradeInfo.Description;
-        levelText.text = $"Level {currentLevel}/{upgradeInfo.MaxLevel}";
-        effectText.text = $"{GetEffectText(upgradeInfo.Type, currentLevel)}";
-        buyCostText.text = currentLevel < upgradeInfo.MaxLevel ? $"Buy {upgradeInfo.CostPerLevel}" : "Max";
-        buyButton.interactable = UpgradeSystem.Instance.CanPurchaseUpgrade(upgradeInfo.Type);
+        bool isUnlocked = UpgradeSystem.Instance.IsUpgradeUnlocked(upgradeInfo.Type);
+        descriptionText.text = isUnlocked ? upgradeInfo.Description : $"{upgradeInfo.Description}\n(Unlocks at level {(int)upgradeInfo.Type + 1})";
+        levelText.text = isUnlocked ? $"Level {currentLevel}/{upgradeInfo.MaxLevel}" : "Locked";
+        effectText.text = isUnlocked ? $"{GetEffectText(upgradeInfo.Type, currentLevel)}" : "Locked";
+        buyCostText.text = isUnlocked && currentLevel < upgradeInfo.MaxLevel ? $"Buy {upgradeInfo.CostPerLevel}" : isUnlocked ? "Max" : "Locked";
+        buyButton.interactable = isUnlocked && UpgradeSystem.Instance.CanPurchaseUpgrade(upgradeInfo.Type);
     }
 
     private string GetEffectText(UpgradeType type, int level)

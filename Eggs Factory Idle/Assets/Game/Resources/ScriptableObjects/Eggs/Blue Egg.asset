@@ -15,5 +15,5 @@ MonoBehaviour:
   EggSprite: {fileID: 21300000, guid: a96f97cd6323a364fabe70789f31d7ad, type: 3}
   EggName: Blue Egg
   BaseSpawnInterval: 6
-  BaseUpgradeCost: 250
-  BaseIncome: 10
+  BaseUpgradeCost: 1000
+  BaseIncome: 250

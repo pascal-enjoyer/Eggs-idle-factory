@@ -1,0 +1,1 @@
+D:\github\Eggs-idle-factory\Eggs Factory Idle\Library\Bee\Android\Prj\IL2CPP\Gradle\unityLibrary\build\intermediates\cxx\RelWithDebInfo\2s2t3j4v\obj\arm64-v8a

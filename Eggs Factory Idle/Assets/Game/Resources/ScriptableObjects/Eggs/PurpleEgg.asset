@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e6811e800168047b68c971fd15f351, type: 3}
+  m_Name: PurpleEgg
+  m_EditorClassIdentifier: 
+  EggSprite: {fileID: 21300000, guid: 8d4cd74756833b246aa5bd6b9112049f, type: 3}
+  EggName: Purple
+  BaseSpawnInterval: 12
+  BaseUpgradeCost: 10000
+  BaseIncome: 3000

@@ -105,7 +105,7 @@ public class EggCombiner : MonoBehaviour, ICollector
     {
         float offset = Mathf.Sin(Time.time * vibrationFrequency * 2 * Mathf.PI) * vibrationAmplitude;
         transform.localPosition = basePosition + transform.right * offset;
-        Debug.Log($"EggCombiner: ¬ибраци€ на {gameObject.name}, offset: {offset}, позици€: {transform.localPosition}, врем€: {Time.time}");
+        //Debug.Log($"EggCombiner: ¬ибраци€ на {gameObject.name}, offset: {offset}, позици€: {transform.localPosition}, врем€: {Time.time}");
     }
 
     private void PerformFade()
@@ -118,7 +118,7 @@ public class EggCombiner : MonoBehaviour, ICollector
         if (fadeTimer >= 1f)
         {
             isFading = false;
-            Debug.Log($"EggCombiner: јнимаци€ прозрачности завершена на {gameObject.name}, alpha: {currentAlpha}, врем€: {Time.time}");
+            //Debug.Log($"EggCombiner: јнимаци€ прозрачности завершена на {gameObject.name}, alpha: {currentAlpha}, врем€: {Time.time}");
         }
     }
 
@@ -138,7 +138,7 @@ public class EggCombiner : MonoBehaviour, ICollector
         isFading = true;
         fadeTimer = 0f;
         boxCollider.enabled = true;
-        Debug.Log($"EggCombiner: јктиваци€ на {gameObject.name}, целева€ прозрачность: {targetAlpha}, врем€: {Time.time}");
+        //Debug.Log($"EggCombiner: јктиваци€ на {gameObject.name}, целева€ прозрачность: {targetAlpha}, врем€: {Time.time}");
     }
 
     private void Deactivate()
@@ -150,14 +150,14 @@ public class EggCombiner : MonoBehaviour, ICollector
         isFading = true;
         fadeTimer = 0f;
         boxCollider.enabled = false;
-        Debug.Log($"EggCombiner: ƒеактиваци€ на {gameObject.name}, целева€ прозрачность: {targetAlpha}, врем€: {Time.time}");
+        //Debug.Log($"EggCombiner: ƒеактиваци€ на {gameObject.name}, целева€ прозрачность: {targetAlpha}, врем€: {Time.time}");
     }
 
     public void ProcessCollectible(ICollectable collectible)
     {
         if (collectible == null || !isActive)
         {
-            Debug.LogWarning($"EggCombiner: ѕолучен null collectible или неактивное состо€ние на {gameObject.name}");
+            //Debug.LogWarning($"EggCombiner: ѕолучен null collectible или неактивное состо€ние на {gameObject.name}");
             return;
         }
 
@@ -170,7 +170,7 @@ public class EggCombiner : MonoBehaviour, ICollector
         collectible.Collect();
         OnEggCollected?.Invoke();
 
-        Debug.Log($"EggCombiner: —обрано €йцо на {gameObject.name}, монеты: {coins}, общее количество: {collectedEggs}/{eggThreshold}, totalCoinReward: {totalCoinReward}, позици€: {transform.position}, врем€: {Time.time}");
+        //Debug.Log($"EggCombiner: —обрано €йцо на {gameObject.name}, монеты: {coins}, общее количество: {collectedEggs}/{eggThreshold}, totalCoinReward: {totalCoinReward}, позици€: {transform.position}, врем€: {Time.time}");
 
         // ѕровер€ем, собрано ли достаточно €иц
         if (collectedEggs >= eggThreshold)
@@ -196,13 +196,13 @@ public class EggCombiner : MonoBehaviour, ICollector
     {
         if (bigEggPrefab == null)
         {
-            Debug.LogWarning($"EggCombiner: bigEggPrefab не назначен на {gameObject.name}!");
+            //Debug.LogWarning($"EggCombiner: bigEggPrefab не назначен на {gameObject.name}!");
             return;
         }
 
         if (lastEggData == null)
         {
-            Debug.LogWarning($"EggCombiner: EggData не сохранЄн, невозможно создать большое €йцо на {gameObject.name}!");
+            //Debug.LogWarning($"EggCombiner: EggData не сохранЄн, невозможно создать большое €йцо на {gameObject.name}!");
             return;
         }
 
@@ -211,7 +211,7 @@ public class EggCombiner : MonoBehaviour, ICollector
         CombinedEggData eggScript = bigEgg.GetComponent<CombinedEggData>();
         if (eggScript == null)
         {
-            Debug.LogWarning($"EggCombiner: bigEggPrefab не содержит компонент CombinedEggData на {gameObject.name}!");
+            //Debug.LogWarning($"EggCombiner: bigEggPrefab не содержит компонент CombinedEggData на {gameObject.name}!");
             Destroy(bigEgg);
             return;
         }
@@ -219,7 +219,7 @@ public class EggCombiner : MonoBehaviour, ICollector
         // »нициализируем большое €йцо
         eggScript.Initialize(totalCoinReward / 2f, lastEggData.EggSprite);
 
-        Debug.Log($"EggCombiner: —оздано большое €йцо на {gameObject.name}, монеты: {totalCoinReward / 2f}, позици€: {bigEgg.transform.position}, врем€: {Time.time}");
+        //Debug.Log($"EggCombiner: —оздано большое €йцо на {gameObject.name}, монеты: {totalCoinReward / 2f}, позици€: {bigEgg.transform.position}, врем€: {Time.time}");
 
         // —брасываем счЄтчик и сумму
         collectedEggs = 0;
