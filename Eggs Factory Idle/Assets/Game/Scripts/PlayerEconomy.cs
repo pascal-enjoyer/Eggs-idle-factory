@@ -76,7 +76,6 @@ public class PlayerEconomy : MonoBehaviour
         experience = 0;
         level = 0;
         UpgradeSystem.Instance.upgradePoints = 0;
-
         UpgradeSystem.Instance.ClearUpgradeData();
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();

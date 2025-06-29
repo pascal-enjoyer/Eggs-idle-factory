@@ -7,11 +7,11 @@ public class HandSaw : EggSplitter
     [SerializeField] private GameObject effectPrefab;
     [SerializeField] private Transform activationPoint;
     [SerializeField] private Transform deactivationPoint;
-    private float sawAmplitude = 0.5f;
-    private float sawFrequency = 2f;
-    private float colliderActiveTime = 0.2f;
-    private float rotationDuration = 0.3f;
-    private AnimationCurve rotationCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [SerializeField] private float sawAmplitude = 0.5f;
+    [SerializeField] private float sawFrequency = 2f;
+    [SerializeField] private float colliderActiveTime = 0.2f;
+    [SerializeField] private float rotationDuration = 0.3f;
+    [SerializeField] private AnimationCurve rotationCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     private BoxCollider2D sawCollider;
     private SpriteRenderer spriteRenderer;

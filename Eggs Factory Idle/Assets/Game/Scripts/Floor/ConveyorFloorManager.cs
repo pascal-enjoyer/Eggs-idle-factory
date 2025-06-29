@@ -88,7 +88,6 @@ public class ConveyorFloorManager : MonoBehaviour
     public void UpdateConveyorCount()
     {
         int targetCount = GameModifiers.Instance.GetConveyorCount();
-        Debug.Log(targetCount);
         if (targetCount < floors.Count)
         {
             ClearAllFloors();

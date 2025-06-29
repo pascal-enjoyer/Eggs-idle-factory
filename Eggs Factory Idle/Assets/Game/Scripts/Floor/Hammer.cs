@@ -7,12 +7,12 @@ public class Hammer : EggSplitter
     [SerializeField] private GameObject effectPrefab;
     [SerializeField] private float inactiveAngle = 45f;
     [SerializeField] private float activeAngle = -45f;
-    private float chargeDuration = 1f;
-    private float hitDuration = 0.5f;
-    private AnimationCurve chargeCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    private AnimationCurve hitCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    private float colliderActiveTime = 0.2f;
-    private float minChargeAlpha = 0.5f;
+    [SerializeField] private float chargeDuration = 1f;
+    [SerializeField] private float hitDuration = 0.5f;
+    [SerializeField] private AnimationCurve chargeCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [SerializeField] private AnimationCurve hitCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [SerializeField] private float colliderActiveTime = 0.2f;
+    [SerializeField] private float minChargeAlpha = 0.5f;
 
     private BoxCollider2D hammerCollider;
     private SpriteRenderer spriteRenderer;
