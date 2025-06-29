@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class EggSplitter : MonoBehaviour
 {
-    [SerializeField] protected float activeTime = 1f; // Время активности
-    [SerializeField] protected float inactiveTime = 3f; // Время между активациями
+    [SerializeField] protected float activeTime = 1f;
+    [SerializeField] protected float inactiveTime = 3f;
 
     protected float timer;
     protected bool isActive;
@@ -41,8 +41,5 @@ public abstract class EggSplitter : MonoBehaviour
         timer = inactiveTime;
     }
 
-    protected virtual void ProcessEggCollision(Egg egg, Vector3 collisionPosition)
-    {
-        // Реализация по умолчанию, может быть переопределена
-    }
+    protected virtual void ProcessEggCollision(Egg egg, Vector3 collisionPosition){}
 }

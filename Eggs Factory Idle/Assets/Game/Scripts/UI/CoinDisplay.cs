@@ -45,7 +45,7 @@ public class CoinDisplay : MonoBehaviour
     {
         if (PlayerEconomy.Instance != null)
         {
-            coinsText.text = PlayerEconomy.Instance.GetCoins().ToString(); // Округляем до int
+            coinsText.text = PlayerEconomy.Instance.GetCoins().ToString();
         }
     }
 }

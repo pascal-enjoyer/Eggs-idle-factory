@@ -12,8 +12,7 @@ public class Conveyor : MonoBehaviour, IConveyor
     {
         boxCollider = GetComponent<BoxCollider2D>();
         boxCollider.isTrigger = false;
-        //gameObject.layer = LayerMask.NameToLayer("Conveyor");
-        //Debug.Log($"Conveyor {gameObject.name} initialized, colliderBounds={boxCollider.bounds}");
+
     }
 
     public void MoveObject(Rigidbody2D rb)
@@ -35,7 +34,6 @@ public class Conveyor : MonoBehaviour, IConveyor
         Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            //Debug.Log($"Conveyor {gameObject.name} collision with {collision.gameObject.name}");
             MoveObject(rb);
         }
     }

@@ -111,13 +111,11 @@ public class AudioManager : MonoBehaviour, IAudioService
         currentMusicSource = Instantiate(musicSourcePrefab, transform);
         ConfigureAudioSource(currentMusicSource, music, 1f);
 
-        // Ќастраиваем событие окончани€ трека дл€ циклического воспроизведени€
         StartCoroutine(WaitForMusicEnd(music.clip.length / music.pitch));
     }
 
     private void PlayNextMusic()
     {
-        // „ередуем музыку с ID "0" и "1"
         string musicId = "0";
         PlayMusic(musicId);
     }

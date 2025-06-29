@@ -22,7 +22,6 @@ public class AchievementUIElement : MonoBehaviour
             text.text = Achievement.AchievementName + $"\nLevel: {Achievement.CurrentLevel}";
         if (Achievement.Type == AchievementType.FactoryLevel)
         {
-            // Для FactoryLevel показываем текущий уровень игрока
             text.text += $"\n{Mathf.FloorToInt(Achievement.CurrentProgress)}/{Mathf.FloorToInt(Achievement.GetGoalForLevel(Achievement.CurrentLevel))}";
             }
             else

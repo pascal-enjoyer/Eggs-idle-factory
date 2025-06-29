@@ -12,7 +12,6 @@ public class ScrollRectInitializer : MonoBehaviour
 
     private void Start()
     {
-        // Сбрасываем позицию прокрутки в начало
         ResetScrollPosition();
     }
 
@@ -20,16 +19,14 @@ public class ScrollRectInitializer : MonoBehaviour
     {
         if (scrollRect != null)
         {
-            // Для вертикального скролла
             if (scrollRect.vertical)
             {
-                scrollRect.verticalNormalizedPosition = 1f; // 1 - верх, 0 - низ
+                scrollRect.verticalNormalizedPosition = 1f;
             }
 
-            // Для горизонтального скролла
             if (scrollRect.horizontal)
             {
-                scrollRect.horizontalNormalizedPosition = 0f; // 0 - начало, 1 - конец
+                scrollRect.horizontalNormalizedPosition = 0f;
             }
         }
     }

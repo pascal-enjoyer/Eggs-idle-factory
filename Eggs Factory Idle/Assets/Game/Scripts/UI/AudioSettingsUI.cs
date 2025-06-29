@@ -12,7 +12,7 @@ public class AudioSettingsUI : MonoBehaviour
     [SerializeField] private Sprite soundOffSprite;
     [SerializeField] private Sprite musicOnSprite;
     [SerializeField] private Sprite musicOffSprite;
-    [SerializeField] private AudioMixer audioMixer; // Добавляем ссылку на AudioMixer
+    [SerializeField] private AudioMixer audioMixer;
 
     private IAudioService audioService;
     private const float VOLUME_THRESHOLD = 0.01f;
@@ -20,10 +20,6 @@ public class AudioSettingsUI : MonoBehaviour
     private void Awake()
     {
         audioService = FindObjectOfType<AudioManager>();
-        if (audioService == null)
-        {
-            Debug.LogError("AudioSettingsUI: AudioManager not found in scene!");
-        }
     }
 
     private void Start()
@@ -49,7 +45,6 @@ public class AudioSettingsUI : MonoBehaviour
 
     private void OnSoundSliderChanged(float value)
     {
-        // Обрабатываем нулевую громкость для звуков
         if (value <= VOLUME_THRESHOLD)
         {
             audioMixer.SetFloat("SoundVolume", -80f);
@@ -59,12 +54,10 @@ public class AudioSettingsUI : MonoBehaviour
             audioService.SetSoundVolume(value);
         }
         UpdateSoundIcon(value);
-        Debug.Log($"AudioSettingsUI: Sound volume set to {value}");
     }
 
     private void OnMusicSliderChanged(float value)
     {
-        // Обрабатываем нулевую громкость для музыки
         if (value <= VOLUME_THRESHOLD)
         {
             audioMixer.SetFloat("MusicVolume", -80f);
@@ -74,7 +67,6 @@ public class AudioSettingsUI : MonoBehaviour
             audioService.SetMusicVolume(value);
         }
         UpdateMusicIcon(value);
-        Debug.Log($"AudioSettingsUI: Music volume set to {value}");
     }
 
     private void UpdateIcons()

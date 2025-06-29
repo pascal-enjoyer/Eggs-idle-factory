@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Upgrades:
   - Type: 0
-    MaxLevel: 5
+    MaxLevel: 7
     CostPerLevel: 2
     Icon: {fileID: 21300000, guid: 368c3ee00ce8303448ed9753c07cdeb2, type: 3}
     Description: Increases the number of conveyor floors by 1

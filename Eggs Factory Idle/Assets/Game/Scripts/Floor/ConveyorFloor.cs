@@ -31,7 +31,6 @@ public class ConveyorFloor : MonoBehaviour, IConveyorable
 
     public void Mirror()
     {
-        // Поворачиваем на 180 градусов по оси Y, вместо изменения масштаба
         Vector3 currentRotation = transform.localRotation.eulerAngles;
         float newYRotation = Mathf.Approximately(currentRotation.y, 180f) ? 0f : 180f;
         transform.localRotation = Quaternion.Euler(0f, newYRotation, 0f);
@@ -39,7 +38,6 @@ public class ConveyorFloor : MonoBehaviour, IConveyorable
         {
             converyorManager.MirrorDirection();
         }
-        //Debug.Log($"ConveyorFloor: Зеркалирование на {gameObject.name}, rotation.y: {newYRotation}");
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

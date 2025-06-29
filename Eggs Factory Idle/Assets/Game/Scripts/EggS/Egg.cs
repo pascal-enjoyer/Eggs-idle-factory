@@ -35,7 +35,7 @@ public class Egg : MonoBehaviour, IInitializableEgg, IMoveable, ICollectable
         Destroy(gameObject);
     }
 
-    public float GetCoinReward() // Теперь float
+    public float GetCoinReward()
     {
         return eggData.CurrentIncome;
     }

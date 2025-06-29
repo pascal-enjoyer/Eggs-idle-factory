@@ -3,8 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer), typeof(CircleCollider2D))]
 public class CombinedEggData : MonoBehaviour, ICollectable, IMoveable, IInitializableEgg
 {
-    private float coinReward; // Сумма монет (totalCoinReward / 2)
-    private float experienceReward = 1f; // Фиксированный опыт
+    private float coinReward;
+    private float experienceReward = 1f;
     private SpriteRenderer spriteRenderer;
 
     private EggData eggData;
@@ -13,22 +13,20 @@ public class CombinedEggData : MonoBehaviour, ICollectable, IMoveable, IInitiali
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        gameObject.layer = LayerMask.NameToLayer("Egg"); // Совместимость с EggCollector
+        gameObject.layer = LayerMask.NameToLayer("Egg");
         rb2D = GetComponent<Rigidbody2D>();
-        rb2D.gravityScale = 1f; // Для движения по конвейеру
+        rb2D.gravityScale = 1f;
     }
 
     public void Initialize(float coins, Sprite sprite)
     {
         coinReward = coins;
         spriteRenderer.sprite = sprite;
-        Debug.Log($"CombinedEggData: Инициализировано на {gameObject.name}, монеты: {coinReward}, время: {Time.time}");
     }
 
     public void Collect()
     {
         Destroy(gameObject);
-        Debug.Log($"CombinedEggData: Большое яйцо собрано на {gameObject.name}, монеты: {coinReward}, время: {Time.time}");
     }
 
     public float GetCoinReward()

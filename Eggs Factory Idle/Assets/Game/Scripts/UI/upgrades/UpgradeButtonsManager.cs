@@ -4,12 +4,12 @@ using System;
 
 public class UpgradeButtonsManager : MonoBehaviour
 {
-    [SerializeField] private UpgradeConfigSO _upgradeConfig; // Конфигурация апгрейдов
-    [SerializeField] private UpgradeButton _upgradeButtonPrefab; // Префаб кнопки апгрейда
-    [SerializeField] private Transform _buttonsParent; // Родительский объект для кнопок
+    [SerializeField] private UpgradeConfigSO _upgradeConfig;
+    [SerializeField] private UpgradeButton _upgradeButtonPrefab;
+    [SerializeField] private Transform _buttonsParent;
 
     private List<UpgradeButton> _spawnedButtons = new List<UpgradeButton>();
-    public event Action<UpgradeType> OnUpgradeSelected; // Событие выбора апгрейда
+    public event Action<UpgradeType> OnUpgradeSelected;
 
     private void Start()
     {
@@ -20,7 +20,6 @@ public class UpgradeButtonsManager : MonoBehaviour
     {
         if (_upgradeConfig == null || _upgradeButtonPrefab == null || _buttonsParent == null)
         {
-            Debug.LogError("UpgradeButtonsManager: Не заданы _upgradeConfig, _upgradeButtonPrefab или _buttonsParent!");
             return;
         }
 

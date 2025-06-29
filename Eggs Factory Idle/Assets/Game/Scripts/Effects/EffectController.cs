@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class EffectController : MonoBehaviour
 {
-    [SerializeField] private float lifetime = 1f; // Длительность эффекта (настройте под префаб)
+    [SerializeField] private float lifetime = 1f;
 
     private void OnEnable()
     {

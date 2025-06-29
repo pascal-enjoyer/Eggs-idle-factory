@@ -4,21 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class Hammer : EggSplitter
 {
-    [SerializeField] private GameObject effectPrefab; // Префаб эффекта разделения
-    [SerializeField] private float inactiveAngle = 45f; // Угол оттягивания назад (зарядка)
-    [SerializeField] private float activeAngle = -45f; // Угол удара
-    [SerializeField, Tooltip("Длительность зарядки в секундах (уменьшите для ускорения)")]
-    private float chargeDuration = 1f; // Длительность анимации зарядки
-    [SerializeField, Tooltip("Длительность удара в секундах (уменьшите для ускорения)")]
-    private float hitDuration = 0.5f; // Длительность анимации удара
-    [SerializeField, Tooltip("Кривая для зарядки (настройте для резкости)")]
-    private AnimationCurve chargeCurve = AnimationCurve.Linear(0, 0, 1, 1); // Кривая анимации зарядки
-    [SerializeField, Tooltip("Кривая для удара (настройте для резкости)")]
-    private AnimationCurve hitCurve = AnimationCurve.Linear(0, 0, 1, 1); // Кривая анимации удара
-    [SerializeField, Tooltip("Время активности коллайдера во время удара")]
-    private float colliderActiveTime = 0.2f; // Время активности коллайдера во время удара
-    [SerializeField, Tooltip("Минимальная прозрачность во время зарядки (0 = полностью прозрачный, 1 = непрозрачный)")]
-    private float minChargeAlpha = 0.5f; // Минимальная прозрачность при зарядке
+    [SerializeField] private GameObject effectPrefab;
+    [SerializeField] private float inactiveAngle = 45f;
+    [SerializeField] private float activeAngle = -45f;
+    private float chargeDuration = 1f;
+    private float hitDuration = 0.5f;
+    private AnimationCurve chargeCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    private AnimationCurve hitCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    private float colliderActiveTime = 0.2f;
+    private float minChargeAlpha = 0.5f;
 
     private BoxCollider2D hammerCollider;
     private SpriteRenderer spriteRenderer;
@@ -28,7 +22,7 @@ public class Hammer : EggSplitter
     private bool isColliderActive;
     private float startAngle;
     private float targetAngle;
-    private bool isCharging; // true для зарядки, false для удара
+    private bool isCharging;
 
     protected override void Start()
     {
@@ -36,24 +30,21 @@ public class Hammer : EggSplitter
         hammerCollider = GetComponent<BoxCollider2D>();
         if (hammerCollider == null)
         {
-           // Debug.LogError($"Hammer: BoxCollider2D отсутствует на {gameObject.name}!");
             return;
         }
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
         {
-            //Debug.LogError($"Hammer: SpriteRenderer отсутствует на {gameObject.name}!");
             return;
         }
         hammerCollider.isTrigger = true;
-        hammerCollider.enabled = false; // Коллайдер изначально выключен
+        hammerCollider.enabled = false;
         startAngle = inactiveAngle;
         targetAngle = inactiveAngle;
         transform.localRotation = Quaternion.Euler(0, 0, startAngle);
         isCharging = true;
-        SetAlpha(1f); // Полная непрозрачность при старте
-        //Debug.Log($"Hammer: Инициализация на {gameObject.name}, стартовый угол: {startAngle}, chargeDuration: {chargeDuration}, hitDuration: {hitDuration}, minChargeAlpha: {minChargeAlpha}, parent rotationY: {(transform.parent != null ? transform.parent.localRotation.eulerAngles.y : 0f)}, время: {Time.time}");
-    }
+        SetAlpha(1f);
+        }
 
     protected override void Update()
     {
@@ -73,19 +64,17 @@ public class Hammer : EggSplitter
         float currentAngle = Mathf.LerpAngle(startAngle, targetAngle, t);
         transform.localRotation = Quaternion.Euler(0, 0, currentAngle);
 
-        // Управление прозрачностью во время зарядки
         if (isCharging)
         {
             float alpha = Mathf.Lerp(1f, minChargeAlpha, t);
             SetAlpha(alpha);
-            //Debug.Log($"Hammer: Зарядка на {gameObject.name}, alpha: {alpha}, t: {t}, время: {Time.time}");
+            
         }
         else
         {
-            SetAlpha(1f); // Полная непрозрачность во время удара
+            SetAlpha(1f);
         }
 
-        // Управление коллайдером во время удара
         if (!isCharging)
         {
             colliderTimer += Time.deltaTime;
@@ -93,21 +82,18 @@ public class Hammer : EggSplitter
             {
                 hammerCollider.enabled = true;
                 isColliderActive = true;
-                //Debug.Log($"Hammer: Коллайдер включён на {gameObject.name}, время: {Time.time}");
             }
             else if (colliderTimer > colliderActiveTime && isColliderActive)
             {
                 hammerCollider.enabled = false;
                 isColliderActive = false;
-                //Debug.Log($"Hammer: Коллайдер выключен на {gameObject.name}, время: {Time.time}");
             }
         }
 
         if (animationTimer >= 1f)
         {
             isAnimating = false;
-            startAngle = targetAngle; // Обновляем стартовый угол для следующей анимации
-            //Debug.Log($"Hammer: Анимация {(isCharging ? "зарядки" : "удара")} завершена на {gameObject.name}, текущий угол: {currentAngle}, alpha: {spriteRenderer.color.a}, длительность: {duration}, время: {Time.time}");
+            startAngle = targetAngle;
         }
     }
 
@@ -121,8 +107,6 @@ public class Hammer : EggSplitter
         isAnimating = true;
         animationTimer = 0f;
         colliderTimer = 0f;
-        SetAlpha(1f); // Полная непрозрачность при ударе
-        //Debug.Log($"Hammer: Активация на {gameObject.name}, стартовый угол: {startAngle}, целевой угол: {targetAngle}, hitDuration: {hitDuration}, время: {Time.time}");
     }
 
     protected override void Deactivate()
@@ -137,7 +121,6 @@ public class Hammer : EggSplitter
         colliderTimer = 0f;
         hammerCollider.enabled = false;
         isColliderActive = false;
-        //Debug.Log($"Hammer: Деактивация на {gameObject.name}, стартовый угол: {startAngle}, целевой угол: {targetAngle}, chargeDuration: {chargeDuration}, время: {Time.time}");
     }
 
     protected override void ProcessEggCollision(Egg egg, Vector3 collisionPosition)
@@ -146,7 +129,6 @@ public class Hammer : EggSplitter
         {
             egg.Split();
             PlaySplitEffect(collisionPosition);
-            //Debug.Log($"Hammer: Яйцо разбито на {gameObject.name} в позиции {collisionPosition}, время: {Time.time}");
         }
     }
 
@@ -163,13 +145,11 @@ public class Hammer : EggSplitter
     {
         if (effectPrefab == null)
         {
-            //Debug.LogWarning($"Hammer: effectPrefab не назначен на {gameObject.name}!");
             return;
         }
 
         if (!IsPositionInCameraView(position))
         {
-            //Debug.Log($"Hammer: Эффект пропущен, позиция {position} вне камеры, время: {Time.time}");
             return;
         }
 
@@ -181,11 +161,6 @@ public class Hammer : EggSplitter
             {
                 controller = effectInstance.AddComponent<EffectController>();
             }
-            //Debug.Log($"Hammer: Воспроизведён эффект разбивания на позиции {position}, время: {Time.time}");
-        }
-        else
-        {
-            //Debug.Log($"Hammer: Эффект пропущен из-за ограничений (активных эффектов: {EffectManager.ActiveEffectsCount}), время: {Time.time}");
         }
     }
 
@@ -194,7 +169,6 @@ public class Hammer : EggSplitter
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
-            //Debug.LogWarning($"Hammer: Camera.main не найдена, время: {Time.time}");
             return false;
         }
 

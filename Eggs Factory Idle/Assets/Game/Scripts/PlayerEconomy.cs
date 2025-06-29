@@ -14,7 +14,6 @@ public class PlayerEconomy : MonoBehaviour
         {
             if (applicationIsQuitting)
             {
-                Debug.LogWarning("PlayerEconomy.Instance вызван во время выхода приложения.");
                 return null;
             }
 
@@ -25,11 +24,6 @@ public class PlayerEconomy : MonoBehaviour
                     GameObject go = new GameObject("PlayerEconomy");
                     instance = go.AddComponent<PlayerEconomy>();
                     DontDestroyOnLoad(go);
-                    Debug.Log("PlayerEconomy: Создан новый синглтон");
-                }
-                else
-                {
-                    Debug.LogWarning("PlayerEconomy: Попытка создания синглтона вне игрового режима.");
                 }
             }
             return instance;
@@ -54,7 +48,6 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (instance != null && instance != this)
         {
-            //Debug.LogWarning($"PlayerEconomy: Обнаружен дубликат синглтона на {gameObject.name}. Уничтожаем этот экземпляр.");
             Destroy(gameObject);
             return;
         }
@@ -68,7 +61,6 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (instance == this && !applicationIsQuitting)
         {
-            //Debug.LogWarning("PlayerEconomy: Основной экземпляр уничтожается. Сбрасываем instance.");
             instance = null;
         }
     }
@@ -80,21 +72,18 @@ public class PlayerEconomy : MonoBehaviour
 
     public void DeleteAll()
     {
-        // 1. Сброс значений в памяти
         coins = 0;
         experience = 0;
         level = 0;
+        UpgradeSystem.Instance.upgradePoints = 0;
 
-        // 2. Очистка PlayerPrefs
+        UpgradeSystem.Instance.ClearUpgradeData();
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
-
-        // 3. Уведомление подписчиков (если нужно)
         CoinsChanged?.Invoke();
         ExperienceChanged?.Invoke();
         LevelChanged?.Invoke();
 
-        // 4. Перезагрузка сцены (если требуется)
         SceneManager.LoadScene(LevelLoader.mainMenuName);
     }
 
@@ -102,32 +91,24 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (amount <= 0)
         {
-            //Debug.LogWarning($"AddCoins вызван с неположительным значением: {amount}. Используйте SpendCoins для списания.");
             return;
         }
-        // Воспроизведение звука повышения уровня (ID "0")
+
         var audioManager = FindObjectOfType<AudioManager>();
         if (audioManager != null)
         {
             audioManager.PlaySound("4", Vector3.zero);
-            //Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
-        }
-        else
-        {
-            //Debug.LogWarning("PlayerEconomy: AudioManager не найден для воспроизведения звука уровня!");
         }
         coins += amount;
         SaveCoins();
         CoinsChanged?.Invoke();
         OnCoinsAdded?.Invoke(amount);
-        //Debug.Log($"Добавлено монет: {amount}, итого: {coins}");
     }
 
     public void SpendCoins(float amount)
     {
         if (amount <= 0)
         {
-            //Debug.LogWarning($"SpendCoins вызван с неположительным значением: {amount}");
             return;
         }
 
@@ -136,11 +117,6 @@ public class PlayerEconomy : MonoBehaviour
             coins -= amount;
             SaveCoins();
             CoinsChanged?.Invoke();
-            //Debug.Log($"Списано монет: {amount}, итого: {coins}");
-        }
-        else
-        {
-            //Debug.LogWarning($"Недостаточно монет для списания: требуется {amount}, есть {coins}");
         }
     }
 
@@ -148,7 +124,6 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (amount < 0)
         {
-            //Debug.LogWarning($"HaveEnoughCoinsToBuy вызван с отрицательным значением: {amount}");
             amount = Mathf.Abs(amount);
         }
 
@@ -169,7 +144,6 @@ public class PlayerEconomy : MonoBehaviour
     {
         if (amount <= 0)
         {
-            //Debug.LogWarning($"AddExperience вызван с неположительным значением: {amount}");
             return;
         }
 
@@ -183,21 +157,15 @@ public class PlayerEconomy : MonoBehaviour
             UpgradeSystem.Instance?.AddUpgradePoints(level / 5 + 2);
             LevelChanged?.Invoke();
             OnLevelUp?.Invoke(level);
-            // Воспроизведение звука повышения уровня (ID "0")
+
             var audioManager = FindObjectOfType<AudioManager>();
             if (audioManager != null)
             {
                 audioManager.PlaySound("0", Vector3.zero);
-                //Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
-            }
-            else
-            {
-                //Debug.LogWarning("PlayerEconomy: AudioManager не найден для воспроизведения звука уровня!");
             }
         }
         SaveExperienceAndLevel();
         ExperienceChanged?.Invoke();
-        //Debug.Log($"Добавлено опыта: {amount}, итого: {experience}");
     }
 
     public int GetExperience()

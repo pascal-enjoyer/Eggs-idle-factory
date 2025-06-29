@@ -5,41 +5,33 @@ using UnityEngine.UI;
 
 public class CoinTextEffect : MonoBehaviour
 {
-    [SerializeField] private Text text; // Текст (TMPro)
-    [SerializeField] private float moveDistance = 2f; // Дистанция подъема
-    [SerializeField] private float moveDuration = 1f; // Длительность анимации
-    [SerializeField] private float fadeDuration = 1f; // Длительность затухания
+    [SerializeField] private Text text;
+    [SerializeField] private float moveDistance = 2f;
+    [SerializeField] private float moveDuration = 1f;
+    [SerializeField] private float fadeDuration = 1f;
 
     public void Initialize(float amount, Vector3 worldPosition, Canvas canvas)
     {
         if (text == null)
         {
-            //Debug.LogWarning("CoinText: TextMeshProUGUI не назначен!");
             return;
         }
 
         if (canvas == null)
         {
-            //Debug.LogWarning("CoinText: Canvas не передан!");
             return;
         }
 
         text.text = $"+{Mathf.FloorToInt(amount)}";
 
-        // Устанавливаем родителя как Canvas
         RectTransform rect = GetComponent<RectTransform>();
         transform.SetParent(canvas.transform, false);
         transform.localScale = Vector3.one;
 
-        // Устанавливаем как первый дочерний элемент, чтобы рендериться под другими UI
         rect.SetAsFirstSibling();
-        //Debug.Log($"CoinText: Установлен как первый дочерний, индекс: {rect.GetSiblingIndex()}");
-
-        // Конвертируем мировую позицию в локальную позицию Canvas
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
-            //Debug.LogWarning("CoinText: Camera.main не найдена!");
             return;
         }
 
@@ -49,11 +41,9 @@ public class CoinTextEffect : MonoBehaviour
         if (RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screenPos, canvas.worldCamera, out localPos))
         {
             rect.anchoredPosition = localPos;
-            //Debug.Log($"CoinText: Мировая позиция: {worldPosition}, Экранная: {screenPos}, Локальная: {localPos}");
         }
         else
         {
-            //Debug.LogWarning("CoinText: Не удалось преобразовать координаты!");
             rect.anchoredPosition = Vector2.zero;
         }
 
@@ -64,7 +54,7 @@ public class CoinTextEffect : MonoBehaviour
     {
         RectTransform rect = GetComponent<RectTransform>();
         Vector2 startPos = rect.anchoredPosition;
-        Vector2 endPos = startPos + Vector2.up * moveDistance * 100f; // Умножаем для UI-пространства
+        Vector2 endPos = startPos + Vector2.up * moveDistance * 100f; 
         float timer = 0f;
 
         Color startColor = text.color;

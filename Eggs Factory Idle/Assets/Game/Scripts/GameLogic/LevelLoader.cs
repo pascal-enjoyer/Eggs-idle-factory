@@ -11,7 +11,6 @@ public class LevelLoader : MonoBehaviour
     {
         if (string.IsNullOrEmpty(levelSceneName))
         {
-            Debug.LogError("Level scene name is not set in the inspector.");
             return;
         }
 

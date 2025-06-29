@@ -10,7 +10,7 @@ public class UpgradeMenu : MonoBehaviour
     [SerializeField] private UpgradeConfigSO upgradeConfig;
 
     [Header("Правая панель")]
-    [SerializeField] private Text descriptionText; // Предполагается, что это Text
+    [SerializeField] private Text descriptionText;
     [SerializeField] private Text levelText;
     [SerializeField] private Text effectText;
     [SerializeField] private Button buyButton;
@@ -27,12 +27,10 @@ public class UpgradeMenu : MonoBehaviour
     {
         if (buttonsManager == null || upgradeConfig == null)
         {
-            Debug.LogError("UpgradeMenu: Не заданы buttonsManager или upgradeConfig!");
             return;
         }
         if (playerLevelText == null || upgradePointsText == null)
         {
-            Debug.LogError("UpgradeMenu: Не заданы playerLevelText или upgradePointsText!");
             return;
         }
 

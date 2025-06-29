@@ -4,19 +4,18 @@ using System.Collections.Generic;
 public class ConveyorFloorManager : MonoBehaviour
 {
     [SerializeField] private List<ConveyorFloor> floors = new List<ConveyorFloor>();
-    [SerializeField] private List<GameObject> floorPrefabs = new List<GameObject>(); // Список префабов этажей
-    [SerializeField] private float verticalSpacing = 2f; // Расстояние между этажами
-    [SerializeField] private Transform initialPosition; // Начальная позиция первого этажа
-    [SerializeField] private int maxFloorsCount = 5; // Максимальное число этажей
+    [SerializeField] private List<GameObject> floorPrefabs = new List<GameObject>();
+    [SerializeField] private float verticalSpacing = 2f;
+    [SerializeField] private Transform initialPosition;
+    [SerializeField] private int maxFloorsCount = 5;
 
     private bool isSubscribed;
-    private int currentPrefabIndex = 0; // Текущий индекс префаба
+    private int currentPrefabIndex = 0;
 
     private void Awake()
     {
         if (floorPrefabs == null || floorPrefabs.Count == 0 || initialPosition == null)
         {
-            //Debug.LogError("ConveyorFloorManager: floorPrefabs не назначены или список пуст, либо initialPosition не назначена!");
             return;
         }
         if (floors.Count == 0)
@@ -32,11 +31,6 @@ public class ConveyorFloorManager : MonoBehaviour
             UpgradeSystem.OnUpgradeChanged += UpdateConveyorCount;
             isSubscribed = true;
             UpdateConveyorCount();
-            //Debug.Log("ConveyorFloorManager: Подписка на UpgradeSystem выполнена");
-        }
-        else
-        {
-            //Debug.LogError("ConveyorFloorManager: UpgradeSystem.Instance не инициализирован!");
         }
     }
 
@@ -52,32 +46,25 @@ public class ConveyorFloorManager : MonoBehaviour
     {
         if (floorPrefabs.Count == 0)
         {
-            //Debug.LogError("ConveyorFloorManager: Список floorPrefabs пуст!");
             return;
         }
         if (floors.Count >= maxFloorsCount)
         {
-           //Debug.LogWarning("ConveyorFloorManager: Достигнуто максимальное число этажей!");
             return;
         }
 
-        // Выбор префаба по текущему индексу
         GameObject selectedPrefab = floorPrefabs[currentPrefabIndex];
-
-        // Спавн нового этажа с вертикальным смещением
         Vector3 spawnPosition = initialPosition.position + new Vector3(0f, -verticalSpacing * floors.Count, 0f);
         GameObject newFloor = Instantiate(selectedPrefab, spawnPosition, Quaternion.identity, transform);
         ConveyorFloor newConveyorFloor = newFloor.GetComponent<ConveyorFloor>();
         if (newConveyorFloor == null)
         {
-            //Debug.LogError("ConveyorFloorManager: Выбранный префаб не содержит компонент ConveyorFloor!");
             Destroy(newFloor);
             return;
         }
 
         floors.Add(newConveyorFloor);
 
-        // Зеркалирование для чередующихся этажей
         if (floors.Count % 2 == 0)
         {
             newConveyorFloor.Mirror();
@@ -85,7 +72,6 @@ public class ConveyorFloorManager : MonoBehaviour
 
         UpdateFloorStates();
 
-        // Обновление индекса префаба (циклический переход)
         currentPrefabIndex = (currentPrefabIndex + 1) % floorPrefabs.Count;
     }
 
@@ -102,9 +88,29 @@ public class ConveyorFloorManager : MonoBehaviour
     public void UpdateConveyorCount()
     {
         int targetCount = GameModifiers.Instance.GetConveyorCount();
+        Debug.Log(targetCount);
+        if (targetCount < floors.Count)
+        {
+            ClearAllFloors();
+        }
+
         while (floors.Count < targetCount)
         {
             AddFloor();
         }
+    }
+
+    private void ClearAllFloors()
+    {
+        foreach (var floor in floors)
+        {
+            if (floor != null)
+            {
+                Destroy(floor.gameObject);
+            }
+        }
+        floors.Clear();
+        currentPrefabIndex = 0;
+        UpdateFloorStates();
     }
 }

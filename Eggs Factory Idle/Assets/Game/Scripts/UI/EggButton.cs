@@ -15,8 +15,6 @@ public class EggButton : MonoBehaviour
     [SerializeField] private Button _button;
     [SerializeField] private Image _buttonImage; // Изображение кнопки
 
-    
-
     [SerializeField] private EggData _eggData;
     private Color _originalIconColor;
     private Color _originalTextColor;
@@ -53,11 +51,11 @@ public class EggButton : MonoBehaviour
             PlayerEconomy.Instance.CoinsChanged += UpdateUI;
             isSubscribed = true;
             UpdateUI();
-            Debug.Log($"EggButton: Подписка на PlayerEconomy для {_eggData?.EggName} выполнена");
+            //Debug.Log($"EggButton: Подписка на PlayerEconomy для {_eggData?.EggName} выполнена");
         }
         else
         {
-            Debug.LogError("EggButton: PlayerEconomy.Instance не инициализирован!");
+            //Debug.LogError("EggButton: PlayerEconomy.Instance не инициализирован!");
         }
     }
 
@@ -109,7 +107,7 @@ public class EggButton : MonoBehaviour
             if (_upgradeCostText != null) _upgradeCostText.color = _originalTextColor;
             if (_headerText1 != null) _headerText1.color = _originalTextColor;
             if (_headerText2 != null) _headerText2.color = _originalTextColor;
-            _button.interactable = CanUpgrade();
+            _button.interactable = true;
         }
     }
 
@@ -151,7 +149,7 @@ public class EggButton : MonoBehaviour
                     EggSpawnSystem.Instance.AddEgg(_eggData);
                     UnlockNextEgg?.Invoke(_eggData);
                 }
-                Debug.Log($"DoubleEggPurchaseChance сработал, куплено второе яйцо бесплатно для {_eggData.EggName}");
+                //Debug.Log($"DoubleEggPurchaseChance сработал, куплено второе яйцо бесплатно для {_eggData.EggName}");
             }
 
             UpdateUI();
@@ -164,24 +162,18 @@ public class EggButton : MonoBehaviour
         float reduction = GameModifiers.Instance != null ? GameModifiers.Instance.GetEggCostReduction() : 1f;
         cost *= reduction;
 
-        if (!_eggData.IsUnlocked)
-        {
-            _incomeText.text = "0";
-            _upgradeCostText.text = _eggData.IsFirstInList ? "Free" : "Locked";
-            _button.interactable = false;
-        }
-        else if (_eggData.UpgradeLevel == 0)
+        if (!_eggData.IsUnlocked || _eggData.UpgradeLevel == 0)
         {
             _incomeText.text = "0";
             _upgradeCostText.text = _eggData.IsFirstInList ? "Free" : Mathf.FloorToInt(cost).ToString();
-            _button.interactable = CanUpgrade();
         }
         else
         {
             _incomeText.text = Mathf.FloorToInt(_eggData.CurrentIncome).ToString();
             _upgradeCostText.text = Mathf.FloorToInt(cost).ToString();
-            _button.interactable = CanUpgrade();
         }
+
+        _button.interactable = CanUpgrade();
     }
 
     private bool CanUpgrade()
@@ -190,7 +182,7 @@ public class EggButton : MonoBehaviour
         float cost = _eggData.CurrentUpgradeCost;
         float reduction = GameModifiers.Instance != null ? GameModifiers.Instance.GetEggCostReduction() : 1f;
         cost *= reduction;
-        return _eggData.IsFirstInList || PlayerEconomy.Instance.HaveEnoughCoinsToBuy(cost);
+        return PlayerEconomy.Instance.HaveEnoughCoinsToBuy(cost);
     }
 
     private void SaveEggData()

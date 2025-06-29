@@ -119,26 +119,38 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &117121672 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8257760974500211648, guid: 80f44b6b12d7b6049b2072a3716a2507, type: 3}
-  m_PrefabInstance: {fileID: 1811632238}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &117121673 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8509714843394970054, guid: 80f44b6b12d7b6049b2072a3716a2507, type: 3}
   m_PrefabInstance: {fileID: 1811632238}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &166237348 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2754721938620141170, guid: e400f4c5efbd63546bc14a8954dbbadf, type: 3}
-  m_PrefabInstance: {fileID: 1671589205}
+--- !u!114 &117121674 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1437084407052286214, guid: 80f44b6b12d7b6049b2072a3716a2507, type: 3}
+  m_PrefabInstance: {fileID: 1811632238}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8db0956d7e3f8c488e7b5a6c5cc6390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &166237349 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4520895089052746564, guid: e400f4c5efbd63546bc14a8954dbbadf, type: 3}
   m_PrefabInstance: {fileID: 1671589205}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &166237350 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5151510633249074654, guid: e400f4c5efbd63546bc14a8954dbbadf, type: 3}
+  m_PrefabInstance: {fileID: 1671589205}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8db0956d7e3f8c488e7b5a6c5cc6390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &245080165
 GameObject:
   m_ObjectHideFlags: 0
@@ -1154,10 +1166,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 166237348}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 166237350}
+        m_TargetAssemblyTypeName: UIWindowAnimation, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1287,10 +1299,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 117121672}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 117121674}
+        m_TargetAssemblyTypeName: UIWindowAnimation, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2698,10 +2710,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1447064307}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1447064309}
+        m_TargetAssemblyTypeName: UIWindowAnimation, Assembly-CSharp
+        m_MethodName: Show
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2710,16 +2722,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
---- !u!1 &1447064307 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8257760974500211648, guid: 354afb470676f96409c810930e4a079c, type: 3}
-  m_PrefabInstance: {fileID: 1316612430}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1447064308 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8509714843394970054, guid: 354afb470676f96409c810930e4a079c, type: 3}
   m_PrefabInstance: {fileID: 1316612430}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1447064309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5388157193786548499, guid: 354afb470676f96409c810930e4a079c, type: 3}
+  m_PrefabInstance: {fileID: 1316612430}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8db0956d7e3f8c488e7b5a6c5cc6390, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1448535635
 GameObject:
   m_ObjectHideFlags: 0
@@ -3390,6 +3408,8 @@ MonoBehaviour:
   - {fileID: 8155089336718671303, guid: c77fbe421d5a05745b69891bd43fd94a, type: 3}
   - {fileID: 8155089336718671303, guid: 99e4a9f8df1111f4e89ac4f1601fe2a9, type: 3}
   - {fileID: 8155089336718671303, guid: c822e01808624e046ad721c690fbfc30, type: 3}
+  - {fileID: 8155089336718671303, guid: 0c741dcefdf56ec468d7079736aee7bd, type: 3}
+  - {fileID: 8155089336718671303, guid: 1e11a9c9b7cbf1a4f827fbe3f3c1bedc, type: 3}
   verticalSpacing: 2.5
   initialPosition: {fileID: 1109642567}
   maxFloorsCount: 10

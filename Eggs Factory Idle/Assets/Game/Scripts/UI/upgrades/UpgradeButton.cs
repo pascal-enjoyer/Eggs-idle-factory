@@ -6,7 +6,7 @@ using System;
 public class UpgradeButton : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
-    [SerializeField] private Text levelText; // Предполагается, что это Text, а не TextMeshProUGUI
+    [SerializeField] private Text levelText;
     [SerializeField] private Text costText;
     [SerializeField] private Button button;
 
@@ -25,14 +25,12 @@ public class UpgradeButton : MonoBehaviour
 
         if (UpgradeSystem.Instance == null)
         {
-            Debug.LogError("UpgradeSystem instance is null!");
             return;
         }
 
         var config = UpgradeSystem.Instance.GetUpgradeConfig(type);
         if (config == null)
         {
-            Debug.LogError($"Config for {type} is null!");
             return;
         }
 
@@ -81,7 +79,7 @@ public class UpgradeButton : MonoBehaviour
         if (iconImage != null)
         {
             iconImage.color = isUnlocked ? Color.white : Color.black;
-            iconImage.sprite = config.Icon; // Убедимся, что иконка всегда правильная
+            iconImage.sprite = config.Icon;
         }
 
         if (levelText != null)
@@ -90,8 +88,7 @@ public class UpgradeButton : MonoBehaviour
         if (costText != null)
             costText.color = isUnlocked ? Color.white : Color.black;
 
-        // Кнопка всегда кликабельна, чтобы показывать описание
         if (button != null)
-            button.interactable = true; // Всегда кликабельна
+            button.interactable = true;
     }
 }

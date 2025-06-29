@@ -15,5 +15,5 @@ MonoBehaviour:
   EggSprite: {fileID: 21300000, guid: 1023a3e52afe7ea4ba474cdd722b5f06, type: 3}
   EggName: Pink
   BaseSpawnInterval: 20
-  BaseUpgradeCost: 5000000
+  BaseUpgradeCost: 500000
   BaseIncome: 10000

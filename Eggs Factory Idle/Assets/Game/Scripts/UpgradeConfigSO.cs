@@ -7,11 +7,11 @@ public class UpgradeConfigSO : ScriptableObject
     [System.Serializable]
     public class UpgradeInfo
     {
-        public UpgradeType Type; // Тип апгрейда
-        public int MaxLevel; // Максимальный уровень
-        public int CostPerLevel; // Стоимость за уровень
-        public Sprite Icon; // Иконка апгрейда
-        public string Description; // Описание апгрейда
+        public UpgradeType Type; 
+        public int MaxLevel;
+        public int CostPerLevel;
+        public Sprite Icon;
+        public string Description;
     }
 
     public List<UpgradeInfo> Upgrades = new List<UpgradeInfo>

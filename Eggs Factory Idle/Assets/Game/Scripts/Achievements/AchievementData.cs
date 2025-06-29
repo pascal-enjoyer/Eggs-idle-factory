@@ -6,8 +6,8 @@ public class AchievementData : ScriptableObject
     public string AchievementName;
     public Sprite AchievementIcon;
     public AchievementType Type;
-    public float BaseGoal = 100f; // Базовая цель для уровня 1
-    public float GoalMultiplier = 2f; // Множитель для следующего уровня
+    public float BaseGoal = 100f;
+    public float GoalMultiplier = 2f;
 
     [System.NonSerialized]
     public int CurrentLevel;

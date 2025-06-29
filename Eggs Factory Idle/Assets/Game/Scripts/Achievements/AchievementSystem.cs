@@ -69,7 +69,6 @@ public class AchievementSystem : MonoBehaviour
     private void Start()
     {
         SubscribeToEvents();
-        //Debug.Log("AchievementSystem: ѕодписка на событи€ выполнена");
     }
 
     private void OnDestroy()
@@ -136,7 +135,6 @@ public class AchievementSystem : MonoBehaviour
             {
                 if (type == AchievementType.FactoryLevel)
                 {
-                    // ƒл€ FactoryLevel прогресс равен текущему уровню игрока
                     achievement.CurrentProgress = amount;
                 }
                 else
@@ -149,17 +147,11 @@ public class AchievementSystem : MonoBehaviour
                     achievement.CurrentProgress -= achievement.GetGoalForLevel(achievement.CurrentLevel);
                     achievement.CurrentLevel++;
                     OnAchievementLevelUp.Invoke(achievement);
-                    //Debug.Log($"AchievementSystem: ƒостижение {achievement.AchievementName} достигло уровн€ {achievement.CurrentLevel}");
-                    // ¬оспроизведение звука достижени€ (ID "1")
+
                     var audioManager = FindObjectOfType<AudioManager>();
                     if (audioManager != null)
                     {
                         audioManager.PlaySound("1", Vector3.zero);
-                        //Debug.Log($"AchievementSystem: Played achievement sound for {achievement.AchievementName}");
-                    }
-                    else
-                    {
-                        //Debug.LogWarning("AchievementSystem: AudioManager не найден дл€ воспроизведени€ звука достижени€!");
                     }
                 }
                 achievement.Save();

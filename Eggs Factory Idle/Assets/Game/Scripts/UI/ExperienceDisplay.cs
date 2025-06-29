@@ -5,10 +5,10 @@ using System.Collections;
 public class ExperienceDisplay : MonoBehaviour
 {
     [SerializeField] private Image experienceBar;
-    [SerializeField] private Text experienceText; // Legacy Text
-    [SerializeField] private Color highlightColor = Color.white; // Цвет для моргания (контрастный)
-    [SerializeField] private float blinkDuration = 2f; // Длительность эффекта
-    [SerializeField] private float blinkSpeed = 2f; // Скорость моргания
+    [SerializeField] private Text experienceText; 
+    [SerializeField] private Color highlightColor = Color.white; 
+    [SerializeField] private float blinkDuration = 2f; 
+    [SerializeField] private float blinkSpeed = 2f;
     private bool isSubscribed;
     private Color originalColor;
 
@@ -16,11 +16,7 @@ public class ExperienceDisplay : MonoBehaviour
     {
         if (experienceText != null)
         {
-            originalColor = experienceText.color; // Сохраняем исходный цвет
-        }
-        else
-        {
-            Debug.LogError("ExperienceDisplay: experienceText не назначен!");
+            originalColor = experienceText.color;
         }
     }
 
@@ -53,17 +49,12 @@ public class ExperienceDisplay : MonoBehaviour
             isSubscribed = true;
             UpdateExperienceDisplay();
         }
-        else
-        {
-            Debug.LogWarning("ExperienceDisplay: PlayerEconomy.Instance не найден!");
-        }
     }
 
     private void UpdateExperienceDisplay()
     {
         if (PlayerEconomy.Instance == null)
         {
-            Debug.LogWarning("ExperienceDisplay: PlayerEconomy.Instance is null!");
             return;
         }
 
@@ -77,8 +68,7 @@ public class ExperienceDisplay : MonoBehaviour
 
     private void HandleLevelUp(int newLevel)
     {
-        Debug.Log($"ExperienceDisplay: Повышение уровня до {newLevel}. Запускаем моргание.");
-        StopAllCoroutines(); // Останавливаем предыдущие анимации
+        StopAllCoroutines();
         StartCoroutine(BlinkText());
     }
 
@@ -87,13 +77,11 @@ public class ExperienceDisplay : MonoBehaviour
         float elapsedTime = 0f;
         while (elapsedTime < blinkDuration)
         {
-            // Плавное изменение цвета между originalColor и highlightColor
             float t = Mathf.PingPong(elapsedTime * blinkSpeed, 1f);
             experienceText.color = Color.Lerp(originalColor, highlightColor, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        // Возвращаем исходный цвет
         experienceText.color = originalColor;
     }
 }

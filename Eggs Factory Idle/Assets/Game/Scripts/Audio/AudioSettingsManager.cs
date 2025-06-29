@@ -75,7 +75,6 @@ public class AudioSettingsManager : MonoBehaviour
                 }
                 else
                 {
-                    // Нормализуем значения
                     settings.masterVolume = Mathf.Clamp01(settings.masterVolume);
                     settings.soundVolume = Mathf.Clamp01(settings.soundVolume);
                     settings.musicVolume = Mathf.Clamp01(settings.musicVolume);

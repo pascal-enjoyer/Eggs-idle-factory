@@ -12,11 +12,6 @@ public class AchievementUIManager : MonoBehaviour
         {
             AchievementSystem.Instance.OnAchievementUpdated += UpdateAchievementUI;
             InitializeUI();
-            Debug.Log("AchievementUIManager: Подписка на AchievementSystem выполнена");
-        }
-        else
-        {
-            Debug.LogError("AchievementUIManager: AchievementSystem.Instance не инициализирован!");
         }
     }
     private void OnEnable()
@@ -47,7 +42,6 @@ public class AchievementUIManager : MonoBehaviour
     {
         if (gridLayout == null || achievementUIPrefab == null)
         {
-            Debug.LogError("AchievementUIManager: gridLayout или achievementUIPrefab не назначены!");
             return;
         }
 
@@ -66,7 +60,6 @@ public class AchievementUIManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("AchievementUIManager: achievementUIPrefab не содержит AchievementUIElement!");
                 Destroy(uiElement);
             }
         }

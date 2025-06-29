@@ -7,7 +7,7 @@ public class UpgradeSystem : MonoBehaviour
     public static UpgradeSystem Instance { get; private set; }
 
     private Dictionary<UpgradeType, UpgradeData> upgradeData = new Dictionary<UpgradeType, UpgradeData>();
-    private int upgradePoints;
+    public int upgradePoints;
     [SerializeField] private UpgradeConfigSO upgradeConfig;
     public static event Action<UpgradeType> OnUpgradePurchased;
     public static event Action OnUpgradeChanged;
@@ -47,7 +47,7 @@ public class UpgradeSystem : MonoBehaviour
         }
     }
 
-    private void LoadUpgradePoints()
+    public void LoadUpgradePoints()
     {
         upgradePoints = PlayerPrefs.GetInt("UpgradePoints", 0);
     }
@@ -67,7 +67,7 @@ public class UpgradeSystem : MonoBehaviour
     public bool IsUpgradeUnlocked(UpgradeType type)
     {
         int playerLevel = PlayerEconomy.Instance.GetLevel();
-        int requiredLevel = (int)type + 1; //  аждый апгрейд открываетс€ на уровне, равном его индексу + 1
+        int requiredLevel = (int)type + 1;
         return playerLevel >= requiredLevel;
     }
 
@@ -85,16 +85,11 @@ public class UpgradeSystem : MonoBehaviour
         var data = upgradeData[type];
         upgradePoints -= data.CostPerLevel;
         data.CurrentLevel++;
-        // ¬оспроизведение звука повышени€ уровн€ (ID "0")
+
         var audioManager = FindObjectOfType<AudioManager>();
         if (audioManager != null)
         {
             audioManager.PlaySound("2", Vector3.zero);
-            //Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
-        }
-        else
-        {
-            //Debug.LogWarning("PlayerEconomy: AudioManager не найден дл€ воспроизведени€ звука уровн€!");
         }
         SaveUpgradePoints();
         SaveUpgradeLevel(type);
@@ -103,7 +98,6 @@ public class UpgradeSystem : MonoBehaviour
         OnUpgradePurchased?.Invoke(type);
         OnUpgradeChanged?.Invoke();
 
-        Debug.Log($"Upgrade purchased: {type}, new level: {data.CurrentLevel}");
     }
 
     public void AddUpgradePoints(int points)
@@ -117,6 +111,13 @@ public class UpgradeSystem : MonoBehaviour
 
     public int GetUpgradeLevel(UpgradeType type) => upgradeData.ContainsKey(type) ? upgradeData[type].CurrentLevel : 0;
 
+    public void ClearUpgradeData()
+    {
+        upgradeData.Clear();
+
+        OnUpgradeChanged?.Invoke();
+    }
+
     public UpgradeConfigSO.UpgradeInfo GetUpgradeConfig(UpgradeType type)
     {
         return upgradeConfig.Upgrades.Find(u => u.Type == type);
@@ -129,7 +130,7 @@ public class UpgradeSystem : MonoBehaviour
 
     private void OnPlayerLevelChanged()
     {
-        OnUpgradeChanged?.Invoke(); // ќбновл€ем UI при изменении уровн€ игрока
+        OnUpgradeChanged?.Invoke();
     }
 
     public void AddListener(Action listener) => OnUpgradeChanged += listener;

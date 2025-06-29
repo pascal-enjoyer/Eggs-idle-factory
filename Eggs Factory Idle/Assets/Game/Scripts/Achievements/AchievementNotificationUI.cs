@@ -5,14 +5,14 @@ using System.Collections;
 public class AchievementNotificationUI : MonoBehaviour
 {
     [SerializeField] private Image achievementIcon;
-    [SerializeField] private Text achievementNameText; // Legacy Text
-    [SerializeField] private Text achievementLevelText; // Legacy Text
-    [SerializeField] private float displayDuration = 3f; // Время отображения уведомления
-    public float DisplayDuration => displayDuration; // Время отображения уведомления
-    [SerializeField] private float fadeInDuration = 0.5f; // Длительность появления
-    [SerializeField] private float fadeOutDuration = 0.5f; // Длительность исчезновения
+    [SerializeField] private Text achievementNameText;
+    [SerializeField] private Text achievementLevelText;
+    [SerializeField] private float displayDuration = 3f;
+    public float DisplayDuration => displayDuration;
+    [SerializeField] private float fadeInDuration = 0.5f;
+    [SerializeField] private float fadeOutDuration = 0.5f;
 
-    private Image backgroundImage; // Image на объекте со скриптом
+    private Image backgroundImage;
     private Color iconOriginalColor;
     private Color nameTextOriginalColor;
     private Color levelTextOriginalColor;
@@ -20,7 +20,6 @@ public class AchievementNotificationUI : MonoBehaviour
 
     private void Awake()
     {
-        // Получаем Image на объекте
         backgroundImage = GetComponent<Image>();
         if (backgroundImage == null)
         {
@@ -28,30 +27,25 @@ public class AchievementNotificationUI : MonoBehaviour
             backgroundImage = gameObject.AddComponent<Image>();
         }
 
-        // Сохраняем исходные цвета
         iconOriginalColor = achievementIcon.color;
         nameTextOriginalColor = achievementNameText.color;
         levelTextOriginalColor = achievementLevelText.color;
         backgroundOriginalColor = backgroundImage.color;
 
-        // Устанавливаем начальную прозрачность в 0
         SetAlpha(0f);
     }
 
     public void Show(AchievementData achievement)
     {
-        // Настройка UI
         achievementIcon.sprite = achievement.AchievementIcon;
         achievementNameText.text = achievement.AchievementName;
         achievementLevelText.text = $"Level {achievement.CurrentLevel}";
 
-        // Запускаем анимацию
         StartCoroutine(ShowNotification());
     }
 
     private IEnumerator ShowNotification()
     {
-        // Плавное появление
         float elapsedTime = 0f;
         while (elapsedTime < fadeInDuration)
         {
@@ -60,12 +54,10 @@ public class AchievementNotificationUI : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        SetAlpha(1f); // Убедимся, что альфа точно 1
+        SetAlpha(1f);
 
-        // Ожидание времени отображения
         yield return new WaitForSeconds(displayDuration);
 
-        // Плавное исчезновение
         elapsedTime = 0f;
         while (elapsedTime < fadeOutDuration)
         {
@@ -74,15 +66,15 @@ public class AchievementNotificationUI : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        SetAlpha(0f); // Убедимся, что альфа точно 0
+        SetAlpha(0f);
 
-        // Уничтожаем объект уведомления
+        
         Destroy(gameObject);
     }
 
     private void SetAlpha(float alpha)
     {
-        // Изменяем альфа-канал для фоновой картинки, иконки и текстов
+        
         Color backgroundColor = backgroundOriginalColor;
         backgroundColor.a = alpha;
         backgroundImage.color = backgroundColor;

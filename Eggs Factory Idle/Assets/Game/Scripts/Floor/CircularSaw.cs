@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class CircularSaw : EggSplitter
 {
-    [SerializeField] private Transform activePosition; // Позиция, когда пила активна
-    [SerializeField] private Transform inactivePosition; // Позиция, когда пила неактивна
-    [SerializeField] private float moveDuration = 0.5f; // Длительность движения
-    [SerializeField] private AnimationCurve moveCurve = AnimationCurve.Linear(0, 0, 1, 1); // Кривая анимации
-    [SerializeField] private GameObject effectPrefab; // Префаб эффекта распиливания
+    [SerializeField] private Transform activePosition;
+    [SerializeField] private Transform inactivePosition;
+    [SerializeField] private float moveDuration = 0.5f;
+    [SerializeField] private AnimationCurve moveCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    [SerializeField] private GameObject effectPrefab;
 
     private bool isMoving;
     private float moveTimer;
@@ -17,12 +17,10 @@ public class CircularSaw : EggSplitter
         base.Start();
         if (activePosition == null || inactivePosition == null)
         {
-            //Debug.LogError($"CircularSaw: activePosition или inactivePosition не назначены на {gameObject.name}!");
             return;
         }
         transform.position = inactivePosition.position;
         targetPosition = inactivePosition;
-        //Debug.Log($"CircularSaw: Инициализация на {gameObject.name}, стартовая позиция: {transform.position}");
     }
 
     protected override void Update()
@@ -42,7 +40,6 @@ public class CircularSaw : EggSplitter
         if (moveTimer >= 1f)
         {
             isMoving = false;
-            //Debug.Log($"CircularSaw: Движение завершено на {gameObject.name}, текущая позиция: {transform.position}");
         }
     }
 
@@ -53,7 +50,6 @@ public class CircularSaw : EggSplitter
         targetPosition = activePosition;
         isMoving = true;
         moveTimer = 0f;
-        //Debug.Log($"CircularSaw: Активация пилы на {gameObject.name}, целевая позиция: {targetPosition.position}");
     }
 
     protected override void Deactivate()
@@ -63,7 +59,6 @@ public class CircularSaw : EggSplitter
         targetPosition = inactivePosition;
         isMoving = true;
         moveTimer = 0f;
-        //Debug.Log($"CircularSaw: Деактивация пилы на {gameObject.name}, целевая позиция: {targetPosition.position}");
     }
 
     protected override void ProcessEggCollision(Egg egg, Vector3 collisionPosition)
@@ -72,7 +67,6 @@ public class CircularSaw : EggSplitter
         {
             egg.Split();
             PlaySplitEffect(collisionPosition);
-            //Debug.Log($"CircularSaw: Яйцо разрезано на {gameObject.name} в позиции {collisionPosition}");
         }
     }
 
@@ -89,13 +83,11 @@ public class CircularSaw : EggSplitter
     {
         if (effectPrefab == null)
         {
-            //Debug.LogWarning($"CircularSaw: effectPrefab не назначен на {gameObject.name}!");
             return;
         }
 
         if (!IsPositionInCameraView(position))
         {
-            //Debug.Log($"CircularSaw: Эффект пропущен, позиция {position} вне камеры");
             return;
         }
 
@@ -107,11 +99,6 @@ public class CircularSaw : EggSplitter
             {
                 controller = effectInstance.AddComponent<EffectController>();
             }
-            //Debug.Log($"CircularSaw: Воспроизведён эффект распиливания на позиции {position}");
-        }
-        else
-        {
-            //Debug.Log($"CircularSaw: Эффект пропущен из-за ограничений (активных эффектов: {EffectManager.ActiveEffectsCount})");
         }
     }
 
@@ -120,13 +107,12 @@ public class CircularSaw : EggSplitter
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
-           // Debug.LogWarning("CircularSaw: Camera.main не найдена!");
             return false;
         }
 
         Vector3 viewportPoint = mainCamera.WorldToViewportPoint(worldPosition);
         return viewportPoint.x >= 0f && viewportPoint.x <= 1f &&
                viewportPoint.y >= 0f && viewportPoint.y <= 1f &&
-               viewportPoint.z >= 0f; // Проверяем, что точка перед камерой
+               viewportPoint.z >= 0f;
     }
 }
