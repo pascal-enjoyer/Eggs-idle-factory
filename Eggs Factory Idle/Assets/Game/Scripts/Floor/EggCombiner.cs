@@ -5,6 +5,7 @@ using System;
 public class EggCombiner : MonoBehaviour, ICollector
 {
     [SerializeField] private GameObject bigEggPrefab; // Префаб большого яйца
+    [SerializeField] private GameObject effectPrefab; // Префаб эффекта спавна
     [SerializeField, Tooltip("Количество яиц для создания большого яйца")]
     private int eggThreshold = 3; // Сколько яиц нужно собрать
     [SerializeField, Tooltip("Фиксированный интервал спавна текста монет (секунды)")]
@@ -181,8 +182,8 @@ public class EggCombiner : MonoBehaviour, ICollector
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if ((other.gameObject.layer == LayerMask.NameToLayer("Egg") || other.gameObject.layer == LayerMask.NameToLayer("EggHalf")) && 
-            other.GetComponent<CombinedEggData>()==null)
+        if ((other.gameObject.layer == LayerMask.NameToLayer("Egg") || other.gameObject.layer == LayerMask.NameToLayer("EggHalf")) &&
+            other.GetComponent<CombinedEggData>() == null)
         {
             ICollectable collectible = other.GetComponent<ICollectable>();
             if (collectible != null)
@@ -216,6 +217,21 @@ public class EggCombiner : MonoBehaviour, ICollector
             return;
         }
 
+        // Воспроизведение звука повышения уровня (ID "0")
+        var audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager != null)
+        {
+            audioManager.PlaySound("3", Vector3.zero);
+            //Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
+        }
+        else
+        {
+            //Debug.LogWarning("PlayerEconomy: AudioManager не найден для воспроизведения звука уровня!");
+        }
+
+        // Воспроизведение эффекта спавна
+        PlaySpawnEffect(transform.position);
+
         // Инициализируем большое яйцо
         eggScript.Initialize(totalCoinReward / 2f, lastEggData.EggSprite);
 
@@ -224,5 +240,50 @@ public class EggCombiner : MonoBehaviour, ICollector
         // Сбрасываем счётчик и сумму
         collectedEggs = 0;
         totalCoinReward = 0f;
+    }
+
+    private void PlaySpawnEffect(Vector3 position)
+    {
+        if (effectPrefab == null)
+        {
+            //Debug.LogWarning($"EggCombiner: effectPrefab не назначен на {gameObject.name}!");
+            return;
+        }
+
+        if (!IsPositionInCameraView(position))
+        {
+            //Debug.Log($"EggCombiner: Эффект пропущен, позиция {position} вне камеры");
+            return;
+        }
+
+        if (EffectManager.CanPlayEffect())
+        {
+            GameObject effectInstance = Instantiate(effectPrefab, position, Quaternion.identity, transform);
+            EffectController controller = effectInstance.GetComponent<EffectController>();
+            if (controller == null)
+            {
+                controller = effectInstance.AddComponent<EffectController>();
+            }
+            //Debug.Log($"EggCombiner: Воспроизведён эффект спавна на позиции {position}");
+        }
+        else
+        {
+            //Debug.Log($"EggCombiner: Эффект пропущен из-за ограничений (активных эффектов: {EffectManager.ActiveEffectsCount})");
+        }
+    }
+
+    private bool IsPositionInCameraView(Vector3 worldPosition)
+    {
+        Camera mainCamera = Camera.main;
+        if (mainCamera == null)
+        {
+            //Debug.LogWarning("EggCombiner: Camera.main не найдена!");
+            return false;
+        }
+
+        Vector3 viewportPoint = mainCamera.WorldToViewportPoint(worldPosition);
+        return viewportPoint.x >= 0f && viewportPoint.x <= 1f &&
+               viewportPoint.y >= 0f && viewportPoint.y <= 1f &&
+               viewportPoint.z >= 0f; // Проверяем, что точка перед камерой
     }
 }

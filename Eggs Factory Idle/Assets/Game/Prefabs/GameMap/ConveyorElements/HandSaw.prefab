@@ -134,7 +134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTime: 1
   inactiveTime: 2.75
-  effectPrefab: {fileID: 5460233556859730829, guid: 72fa942841a5cf24794020af62dacfe4, type: 3}
+  effectPrefab: {fileID: 153256, guid: fe394d041df1a0547990f49cf653249f, type: 3}
   activationPoint: {fileID: 3449778997053480661}
   deactivationPoint: {fileID: 5262394387815502922}
   sawAmplitude: 0.5

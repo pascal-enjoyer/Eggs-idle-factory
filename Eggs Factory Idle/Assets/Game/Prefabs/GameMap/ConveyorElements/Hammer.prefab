@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeTime: 0.5
   inactiveTime: 3
-  effectPrefab: {fileID: 5460233556859730829, guid: 72fa942841a5cf24794020af62dacfe4, type: 3}
+  effectPrefab: {fileID: 153256, guid: fe394d041df1a0547990f49cf653249f, type: 3}
   inactiveAngle: 180
   activeAngle: 290
   chargeDuration: 2
@@ -203,6 +203,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   colliderActiveTime: 0.25
+  minChargeAlpha: 0.5
 --- !u!1 &6835858680879816148
 GameObject:
   m_ObjectHideFlags: 0

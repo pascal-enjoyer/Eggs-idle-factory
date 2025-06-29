@@ -102,6 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bigEggPrefab: {fileID: 832506046772117753, guid: 27ffc07415508f840a7764a44463b135, type: 3}
+  effectPrefab: {fileID: 153256, guid: fe394d041df1a0547990f49cf653249f, type: 3}
   eggThreshold: 10
   bufferInterval: 0.2
   activeTime: 2

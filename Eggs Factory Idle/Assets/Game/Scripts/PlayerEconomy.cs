@@ -105,7 +105,17 @@ public class PlayerEconomy : MonoBehaviour
             //Debug.LogWarning($"AddCoins вызван с неположительным значением: {amount}. »спользуйте SpendCoins дл€ списани€.");
             return;
         }
-
+        // ¬оспроизведение звука повышени€ уровн€ (ID "0")
+        var audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager != null)
+        {
+            audioManager.PlaySound("4", Vector3.zero);
+            //Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
+        }
+        else
+        {
+            //Debug.LogWarning("PlayerEconomy: AudioManager не найден дл€ воспроизведени€ звука уровн€!");
+        }
         coins += amount;
         SaveCoins();
         CoinsChanged?.Invoke();

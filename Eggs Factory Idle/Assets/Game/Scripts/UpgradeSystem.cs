@@ -85,7 +85,17 @@ public class UpgradeSystem : MonoBehaviour
         var data = upgradeData[type];
         upgradePoints -= data.CostPerLevel;
         data.CurrentLevel++;
-
+        // Воспроизведение звука повышения уровня (ID "0")
+        var audioManager = FindObjectOfType<AudioManager>();
+        if (audioManager != null)
+        {
+            audioManager.PlaySound("2", Vector3.zero);
+            //Debug.Log($"PlayerEconomy: Played level up sound for level {level}");
+        }
+        else
+        {
+            //Debug.LogWarning("PlayerEconomy: AudioManager не найден для воспроизведения звука уровня!");
+        }
         SaveUpgradePoints();
         SaveUpgradeLevel(type);
         ApplyUpgradeEffects(type);
