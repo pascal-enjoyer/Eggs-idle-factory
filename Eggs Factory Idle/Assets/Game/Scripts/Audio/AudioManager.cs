@@ -50,7 +50,6 @@ public class AudioManager : MonoBehaviour, IAudioService
 
     private void Awake()
     {
-        Debug.Log("AudioManager: Установлен максимальный FPS (targetFrameRate = -1, VSync отключён)");
 
         InitializeDictionaries();
         settingsManager = AudioSettingsManager.Instance;
@@ -86,7 +85,6 @@ public class AudioManager : MonoBehaviour, IAudioService
     {
         if (!soundDict.TryGetValue(soundId, out var sound))
         {
-            Debug.LogWarning($"Sound with ID {soundId} not found!");
             return;
         }
 
@@ -101,7 +99,6 @@ public class AudioManager : MonoBehaviour, IAudioService
     {
         if (!musicDict.TryGetValue(musicId, out var music))
         {
-            Debug.LogWarning($"Music with ID {musicId} not found!");
             return;
         }
 

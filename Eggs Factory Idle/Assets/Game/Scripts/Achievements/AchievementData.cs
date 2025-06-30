@@ -34,6 +34,13 @@ public class AchievementData : ScriptableObject
     {
         return BaseGoal * Mathf.Pow(GoalMultiplier, level);
     }
+
+    public void Clear()
+    {
+        CurrentLevel = 0;
+        CurrentProgress = 0f;
+        Save();
+    }
 }
 
 public enum AchievementType

@@ -56,14 +56,24 @@ MonoBehaviour:
     volume: 1
     pitch: 1
     loop: 0
+  - id: 2
+    clip: {fileID: 8300000, guid: 349c710e56c09ce45b0f9e2d4bd595b7, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - id: 3
+    clip: {fileID: 8300000, guid: 723bff1a070e891438838763233adbaa, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+  - id: 4
+    clip: {fileID: 8300000, guid: 130cd73bc297b9b45b08825b60f9b2a3, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
   musicTracks:
   - id: 0
     clip: {fileID: 8300000, guid: a82dce2ff6ea71348b68d1a4b39fa8e2, type: 3}
-    volume: 1
-    pitch: 1
-    loop: 1
-  - id: 1
-    clip: {fileID: 8300000, guid: 0e8bad5a3ddd04844847896a92e15d7f, type: 3}
     volume: 1
     pitch: 1
     loop: 1

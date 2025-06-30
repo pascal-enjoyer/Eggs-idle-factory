@@ -94,7 +94,7 @@ public class UpgradeSystem : MonoBehaviour
         SaveUpgradePoints();
         SaveUpgradeLevel(type);
         ApplyUpgradeEffects(type);
-
+        
         OnUpgradePurchased?.Invoke(type);
         OnUpgradeChanged?.Invoke();
 
@@ -113,8 +113,12 @@ public class UpgradeSystem : MonoBehaviour
 
     public void ClearUpgradeData()
     {
+        upgradePoints = 0;
         upgradeData.Clear();
 
+        SaveUpgradePoints();
+        InitializeUpgrades();
+        LoadUpgradePoints();
         OnUpgradeChanged?.Invoke();
     }
 

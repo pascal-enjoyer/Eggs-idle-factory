@@ -40,6 +40,7 @@ public class UpgradeButton : MonoBehaviour
 
     private void OnEnable()
     {
+        
         UpgradeSystem.OnUpgradeChanged += UpdateUI;
         UpdateUI();
     }
@@ -63,7 +64,6 @@ public class UpgradeButton : MonoBehaviour
     public void UpdateUI()
     {
         if (UpgradeSystem.Instance == null) return;
-
         var level = UpgradeSystem.Instance.GetUpgradeLevel(upgradeType);
         var config = UpgradeSystem.Instance.GetUpgradeConfig(upgradeType);
         bool isUnlocked = UpgradeSystem.Instance.IsUpgradeUnlocked(upgradeType);

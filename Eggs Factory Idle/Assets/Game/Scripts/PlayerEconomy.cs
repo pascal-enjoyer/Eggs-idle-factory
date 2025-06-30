@@ -74,11 +74,14 @@ public class PlayerEconomy : MonoBehaviour
     {
         coins = 0;
         experience = 0;
-        level = 0;
-        UpgradeSystem.Instance.upgradePoints = 0;
-        UpgradeSystem.Instance.ClearUpgradeData();
+        level = 1;
+
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
+
+        UpgradeSystem.Instance.ClearUpgradeData();
+
+        AchievementSystem.Instance.ClearAllAchievements();
         CoinsChanged?.Invoke();
         ExperienceChanged?.Invoke();
         LevelChanged?.Invoke();

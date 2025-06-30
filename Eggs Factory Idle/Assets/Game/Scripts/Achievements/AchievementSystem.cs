@@ -28,6 +28,8 @@ public class AchievementSystem : MonoBehaviour
     private static bool applicationIsQuitting = false;
     private bool isInitialized = false;
 
+    private bool isSubscribed = false;
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -43,22 +45,28 @@ public class AchievementSystem : MonoBehaviour
     private void Initialize()
     {
         if (isInitialized) return;
-
+        
         LoadAchievements();
         SubscribeToEvents();
         isInitialized = true;
     }
     private void SubscribeToEvents()
     {
+        if (isSubscribed) return;
         PlayerEconomy.OnCoinsAdded += HandleCoinsAdded;
         PlayerEconomy.OnExperienceAdded += HandleExperienceAdded;
         PlayerEconomy.OnLevelUp += HandleLevelUp;
         EggButton.OnEggPurchased += HandleEggPurchased;
         EggCollector.OnEggCollected += HandleEggCollected;
         UpgradeSystem.OnUpgradePurchased += HandleUpgradePurchased;
+        isSubscribed = true;
     }
     private void UnsubscribeFromEvents()
     {
+
+        if (!isSubscribed) return;
+        isSubscribed = false;
+
         PlayerEconomy.OnCoinsAdded -= HandleCoinsAdded;
         PlayerEconomy.OnExperienceAdded -= HandleExperienceAdded;
         PlayerEconomy.OnLevelUp -= HandleLevelUp;
@@ -66,10 +74,7 @@ public class AchievementSystem : MonoBehaviour
         EggCollector.OnEggCollected -= HandleEggCollected;
         UpgradeSystem.OnUpgradePurchased -= HandleUpgradePurchased;
     }
-    private void Start()
-    {
-        SubscribeToEvents();
-    }
+
 
     private void OnDestroy()
     {
@@ -157,6 +162,16 @@ public class AchievementSystem : MonoBehaviour
                 achievement.Save();
                 OnAchievementUpdated?.Invoke(achievement);
             }
+        }
+    }
+
+    public void ClearAllAchievements()
+    {
+        foreach (var achievement in achievements)
+        {
+
+            achievement.Clear();    
+            OnAchievementUpdated?.Invoke(achievement);
         }
     }
 }

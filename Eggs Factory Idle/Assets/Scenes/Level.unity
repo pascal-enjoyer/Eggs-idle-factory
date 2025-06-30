@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 10
+  serializedVersion: 9
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -42,8 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 13
-  m_BakeOnSceneLoad: 0
+  serializedVersion: 12
+  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,6 +66,9 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
+    m_FinalGather: 0
+    m_FinalGatherFiltering: 1
+    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -830,6 +833,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9edf2bd183965314ca242a3c82095be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonsManager: {fileID: 1065118480}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1836,7 +1840,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 224, y: -424.95996}
+  m_AnchoredPosition: {x: 224, y: -272.8612}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1065118480
@@ -1861,6 +1865,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 56dfe646a15b30544b3bbf28b5488c34, type: 2}
   _eggButtonPrefab: {fileID: 1499826801093096054, guid: dccbb3e3299e1da4f8ee918fae38a54f, type: 3}
   _buttonsParent: {fileID: 1065118479}
+  EggButtonsInitialized:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1065118481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3548,62 +3555,6 @@ PrefabInstance:
     - target: {fileID: 2805835981677279019, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: musicTracks.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[2].id
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[3].id
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[4].id
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[2].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 349c710e56c09ce45b0f9e2d4bd595b7, type: 3}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[3].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 723bff1a070e891438838763233adbaa, type: 3}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[4].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 130cd73bc297b9b45b08825b60f9b2a3, type: 3}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[2].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[3].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[4].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[2].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[3].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4648121445456964683, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
-      propertyPath: sounds.Array.data[4].volume
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7006381394549966700, guid: 179ff97a0a2724542856aca6e35aef05, type: 3}
       propertyPath: audioMixer

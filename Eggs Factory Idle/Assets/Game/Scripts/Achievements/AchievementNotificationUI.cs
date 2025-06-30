@@ -23,7 +23,6 @@ public class AchievementNotificationUI : MonoBehaviour
         backgroundImage = GetComponent<Image>();
         if (backgroundImage == null)
         {
-            Debug.LogWarning("AchievementNotificationUI: Image component not found on this GameObject!");
             backgroundImage = gameObject.AddComponent<Image>();
         }
 
